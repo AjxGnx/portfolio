@@ -7,7 +7,7 @@ export const siteConfig = {
   bio: "My commitment to continuous learning drives me to seek new opportunities to grow and contribute to the success of the projects I'm part of. Outside of code, you'll find me reading a good sci-fi book or exploring worlds in video games.",
   email: "alirio1925@gmail.com",
   linkedin: "https://www.linkedin.com/in/alirio-gutierrez-41a4a4197/",
-  github: "https://github.com/aliriogutierrez",
+  github: "https://github.com/AjxGnx",
   location: "Bogotá, Colombia",
 };
 
