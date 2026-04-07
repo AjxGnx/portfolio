@@ -21,6 +21,9 @@ export const metadata: Metadata = {
   },
   description:
     "Senior Backend Developer & Tech Lead. Go, Python, Node.js. Building scalable systems at Gipsyy, ex-Rappi, ex-Platzi.",
+  authors: [
+    { name: "Alirio Gutierrez", url: "https://github.com/AjxGnx" },
+  ],
   openGraph: {
     title: "Alirio Gutierrez | Senior Backend Developer & Tech Lead",
     description:
