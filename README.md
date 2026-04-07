@@ -2,6 +2,8 @@
 
 Personal site and portfolio for **Alirio Gutierrez** — senior backend developer and tech lead. It presents who I am, selected projects, reading and gaming interests, experience, and ways to get in touch.
 
+**GitHub:** [github.com/AjxGnx/portfolio](https://github.com/AjxGnx/portfolio)
+
 ## What’s in the app
 
 - **Home** — hero, highlights (projects, reading, gaming, experience), and skill bars

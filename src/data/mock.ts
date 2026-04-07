@@ -1,3 +1,6 @@
+/** Public GitHub profile — site-wide and project “Code” links when no repo URL */
+export const GITHUB_PROFILE_URL = "https://github.com/AjxGnx";
+
 export const siteConfig = {
   name: "Alirio Gutierrez",
   title: "Golang Developer | Python | NodeJS | Senior Backend Developer | Engineering Lead",
@@ -7,7 +10,7 @@ export const siteConfig = {
   bio: "My commitment to continuous learning drives me to seek new opportunities to grow and contribute to the success of the projects I'm part of. Outside of code, you'll find me reading a good sci-fi book or exploring worlds in video games.",
   email: "alirio1925@gmail.com",
   linkedin: "https://www.linkedin.com/in/alirio-gutierrez-41a4a4197/",
-  github: "https://github.com/AjxGnx",
+  github: GITHUB_PROFILE_URL,
   location: "Bogotá, Colombia",
 };
 
@@ -120,7 +123,7 @@ export const projects = [
       "Brand portal (brands.rappi.com) with custom authentication and authorization, business module, audience system for ad products, reports and notifications with Firebase realtime database.",
     image: "/projects/brands.jpg",
     technologies: ["Go", "Node.js", "Firebase", "AWS S3", "PostgreSQL"],
-    github: "#",
+    github: GITHUB_PROFILE_URL,
     live: "https://brands.rappi.com",
     featured: true,
   },
@@ -131,7 +134,7 @@ export const projects = [
       "Event-driven microservices architecture for Rappi's monetization core, processing millions of transactions with Apache Kafka and Go.",
     image: "/projects/monetization.jpg",
     technologies: ["Go", "Apache Kafka", "Microservices", "Docker", "AWS"],
-    github: "#",
+    github: GITHUB_PROFILE_URL,
     live: "",
     featured: true,
   },
@@ -142,7 +145,7 @@ export const projects = [
       "Massive data processing pipeline implementing DAGs in Apache Airflow with Pandas to move and transform data into BigQuery for business analytics.",
     image: "/projects/bigdata.jpg",
     technologies: ["Python", "Pandas", "Airflow", "BigQuery", "GCP"],
-    github: "#",
+    github: GITHUB_PROFILE_URL,
     live: "",
     featured: true,
   },
@@ -153,7 +156,7 @@ export const projects = [
       "Full-stack development of the transportation platform, leading the technical team in implementing new features and performance improvements.",
     image: "/projects/gipsyy.jpg",
     technologies: ["Go", "Node.js", "React", "PostgreSQL", "Docker"],
-    github: "#",
+    github: GITHUB_PROFILE_URL,
     live: "",
     featured: true,
   },
@@ -164,7 +167,7 @@ export const projects = [
       "Audience segmentation system for advertising products within Rappi, enabling brands to target specific users.",
     image: "/projects/audiences.jpg",
     technologies: ["Go", "PostgreSQL", "Apache Kafka", "Redis"],
-    github: "#",
+    github: GITHUB_PROFILE_URL,
     live: "",
     featured: false,
   },
@@ -175,7 +178,7 @@ export const projects = [
       "Various backend projects for clients at BMKero's, from REST APIs to full web applications, including mobile development with Flutter.",
     image: "/projects/django.jpg",
     technologies: ["Django", "Laravel", "Python", "Flutter", "PostgreSQL"],
-    github: "#",
+    github: GITHUB_PROFILE_URL,
     live: "",
     featured: false,
   },
