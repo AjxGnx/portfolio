@@ -4,7 +4,7 @@ export const GITHUB_PROFILE_URL = "https://github.com/AjxGnx";
 export const siteConfig = {
   name: "Alirio Gutierrez",
   title: "Golang Developer | Python | NodeJS | Senior Backend Developer | Engineering Lead",
-  shortTitle: "Senior Backend Developer & Tech Lead",
+  shortTitle: "Tech Lead & Senior Backend Developer",
   description:
     "Passionate Software Developer who truly believes that tackling new challenges helps us grow professionally and provides constant learning opportunities. With a focus on leadership and teamwork, I'm always ready to take on challenges and find innovative solutions.",
   bio: "My commitment to continuous learning drives me to seek new opportunities to grow and contribute to the success of the projects I'm part of. Outside of code, you'll find me reading a good sci-fi book or exploring worlds in video games.",
