@@ -16,18 +16,18 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Alirio Gutierrez | Senior Backend Developer & Tech Lead",
+    default: "Alirio Gutierrez | Tech Lead & Senior Backend Developer",
     template: "%s | Alirio Gutierrez",
   },
   description:
-    "Senior Backend Developer & Tech Lead. Go, Python, Node.js. Building scalable systems at Gipsyy, ex-Rappi, ex-Platzi.",
+    "Tech Lead & Senior Backend Developer. Go, Python, Node.js. Building scalable systems at Gipsyy, ex-Rappi, ex-Platzi.",
   authors: [
     { name: "Alirio Gutierrez", url: "https://github.com/AjxGnx" },
   ],
   openGraph: {
-    title: "Alirio Gutierrez | Senior Backend Developer & Tech Lead",
+    title: "Alirio Gutierrez | Tech Lead & Senior Backend Developer",
     description:
-      "Senior Backend Developer & Tech Lead. Go, Python, Node.js. Building scalable systems at Gipsyy, ex-Rappi, ex-Platzi.",
+      "Tech Lead & Senior Backend Developer. Go, Python, Node.js. Building scalable systems at Gipsyy, ex-Rappi, ex-Platzi.",
     type: "website",
   },
 };
