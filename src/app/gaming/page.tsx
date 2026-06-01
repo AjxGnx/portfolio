@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Gamepad2, Star, Trophy, Play, Clock } from "lucide-react";
 import AnimatedSection from "@/components/AnimatedSection";
+import Card, { CardContent } from "@/components/Card";
 import SectionHeader from "@/components/SectionHeader";
 import { games } from "@/data/mock";
 
@@ -93,29 +94,30 @@ export default function GamingPage() {
 
               return (
                 <AnimatedSection key={game.id} delay={i * 0.08}>
-                  <div className="group rounded-2xl border border-border/50 bg-card overflow-hidden hover:border-accent/20 hover:glow transition-all h-full flex flex-col">
-                    {/* Image placeholder */}
-                    <div className="relative h-44 bg-gradient-to-br from-emerald-500/10 to-cyan-500/10 overflow-hidden flex items-center justify-center">
-                      <Gamepad2 className="h-12 w-12 text-emerald-400/30" />
-                      <div className="absolute top-3 left-3">
-                        <span
-                          className={`inline-flex items-center gap-1 rounded-full ${status.bg} border ${status.border} px-2 py-0.5 text-xs font-medium ${status.color}`}
-                        >
-                          <StatusIcon className="h-3 w-3" />
-                          {game.status}
-                        </span>
-                      </div>
-                      {game.rating > 0 && (
-                        <div className="absolute top-3 right-3">
-                          <span className="inline-flex items-center gap-1 rounded-full bg-background/80 backdrop-blur-sm px-2 py-0.5 text-xs font-bold text-amber-400">
-                            <Star className="h-3 w-3 fill-amber-400" />
-                            {game.rating}
+                  <Card
+                    media={
+                      <div className="relative h-44 bg-gradient-to-br from-emerald-500/10 to-cyan-500/10 overflow-hidden flex items-center justify-center">
+                        <Gamepad2 className="h-12 w-12 text-emerald-400/30" />
+                        <div className="absolute top-3 left-3">
+                          <span
+                            className={`inline-flex items-center gap-1 rounded-full ${status.bg} border ${status.border} px-2 py-0.5 text-xs font-medium ${status.color}`}
+                          >
+                            <StatusIcon className="h-3 w-3" />
+                            {game.status}
                           </span>
                         </div>
-                      )}
-                    </div>
-
-                    <div className="p-5 flex flex-col flex-1">
+                        {game.rating > 0 && (
+                          <div className="absolute top-3 right-3">
+                            <span className="inline-flex items-center gap-1 rounded-full bg-background/80 backdrop-blur-sm px-2 py-0.5 text-xs font-bold text-amber-400">
+                              <Star className="h-3 w-3 fill-amber-400" />
+                              {game.rating}
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                    }
+                  >
+                    <CardContent>
                       <h3 className="font-bold text-foreground mb-1">
                         {game.title}
                       </h3>
@@ -130,8 +132,8 @@ export default function GamingPage() {
                           &ldquo;{game.review}&rdquo;
                         </p>
                       )}
-                    </div>
-                  </div>
+                    </CardContent>
+                  </Card>
                 </AnimatedSection>
               );
             })}
