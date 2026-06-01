@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { BookOpen, Star, BookMarked, Clock } from "lucide-react";
 import AnimatedSection from "@/components/AnimatedSection";
+import Card, { CardContent } from "@/components/Card";
 import SectionHeader from "@/components/SectionHeader";
 import { books } from "@/data/mock";
 
@@ -92,13 +93,14 @@ export default function ReadingPage() {
 
                       return (
                         <AnimatedSection key={book.id} delay={i * 0.08}>
-                          <div className="group rounded-2xl border border-border/50 bg-card overflow-hidden hover:border-accent/20 hover:glow transition-all h-full flex flex-col">
-                            {/* Cover placeholder */}
-                            <div className="h-36 bg-gradient-to-br from-accent/10 to-accent-secondary/10 flex items-center justify-center">
-                              <BookOpen className="h-10 w-10 text-accent/30" />
-                            </div>
-
-                            <div className="p-5 flex flex-col flex-1">
+                          <Card
+                            media={
+                              <div className="h-36 bg-gradient-to-br from-accent/10 to-accent-secondary/10 flex items-center justify-center">
+                                <BookOpen className="h-10 w-10 text-accent/30" />
+                              </div>
+                            }
+                          >
+                            <CardContent>
                               <div className="flex items-start justify-between gap-2 mb-1">
                                 <h4 className="font-bold text-foreground text-sm leading-tight">
                                   {book.title}
@@ -134,8 +136,8 @@ export default function ReadingPage() {
                                   &ldquo;{book.review}&rdquo;
                                 </p>
                               )}
-                            </div>
-                          </div>
+                            </CardContent>
+                          </Card>
                         </AnimatedSection>
                       );
                     })}
