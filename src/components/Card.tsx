@@ -2,7 +2,6 @@ import { type HTMLAttributes, type ReactNode } from "react";
 
 type CardProps = {
   media?: ReactNode;
-  footer?: ReactNode;
   children: ReactNode;
   className?: string;
 } & Omit<HTMLAttributes<HTMLDivElement>, "children" | "className">;
@@ -16,13 +15,7 @@ function mergeClassName(...values: Array<string | undefined>): string {
   return values.filter(Boolean).join(" ");
 }
 
-export default function Card({
-  media,
-  footer,
-  children,
-  className,
-  ...props
-}: CardProps) {
+export default function Card({ media, children, className, ...props }: CardProps) {
   return (
     <div
       className={mergeClassName(
@@ -33,7 +26,6 @@ export default function Card({
     >
       {media}
       {children}
-      {footer}
     </div>
   );
 }
