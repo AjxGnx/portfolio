@@ -13,7 +13,19 @@ Personal site and portfolio for **Alirio Gutierrez** — senior backend develope
 - **About** — background and experience timeline
 - **Contact** — ways to reach me
 
-Built with **Next.js** (App Router), **React**, **Tailwind CSS**, **Framer Motion**, and **Lucide** icons. Content and copy live under `src/` (including `src/data/mock.ts` for site text and lists).
+Built with **Next.js** (App Router), **React**, **Tailwind CSS**, **Framer Motion**, **Lucide** icons, and **Supabase** (Postgres + Auth). Public content is loaded from Supabase; `src/data/mock.ts` remains as a fallback when env vars are missing.
+
+## Supabase
+
+- **Project:** `portfolio` (`scanphpjyuctnqigzyii`)
+- **Migrations:** `supabase/migrations/`
+- **Env:** copy `.env.example` → `.env.local` (see [Supabase Dashboard → API](https://supabase.com/dashboard/project/scanphpjyuctnqigzyii/settings/api))
+
+Routes:
+
+- `/admin/login` — admin sign-in (email + password)
+- `/admin` — dashboard
+- `/admin/messages` — contact inbox
 
 ## Requirements
 
@@ -25,6 +37,8 @@ Built with **Next.js** (App Router), **React**, **Tailwind CSS**, **Framer Motio
 git clone https://github.com/AjxGnx/portfolio.git
 cd portfolio
 npm install
+cp .env.example .env.local
+# Edit .env.local with your Supabase URL and publishable key
 ```
 
 Development server:

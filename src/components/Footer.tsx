@@ -1,8 +1,10 @@
 import { Mail, Heart } from "lucide-react";
-import { siteConfig } from "@/data/mock";
 import { GitHubIcon, LinkedInIcon } from "./SocialIcons";
+import { getSiteConfig } from "@/lib/data/portfolio";
 
-export default function Footer() {
+export default async function Footer() {
+  const siteConfig = await getSiteConfig();
+
   return (
     <footer className="border-t border-border/50 mt-auto">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 py-8">
