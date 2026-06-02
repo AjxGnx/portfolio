@@ -10,7 +10,7 @@ import {
   Terminal,
 } from "lucide-react";
 import AnimatedSection from "@/components/AnimatedSection";
-import SkillBar from "@/components/SkillBar";
+import SkillCard from "@/components/SkillCard";
 import { GitHubIcon, LinkedInIcon } from "@/components/SocialIcons";
 import { siteConfig, skills } from "@/data/mock";
 
@@ -198,13 +198,7 @@ export default function Home() {
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           {topSkills.map((skill, i) => (
             <AnimatedSection key={skill.name} delay={i * 0.05}>
-              <div className="rounded-xl border border-border/50 bg-card p-4 hover:bg-card-hover transition-colors">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-medium">{skill.name}</span>
-                  <span className="text-xs text-muted">{skill.level}%</span>
-                </div>
-                <SkillBar level={skill.level} delay={i * 0.05} />
-              </div>
+              <SkillCard name={skill.name} level={skill.level} />
             </AnimatedSection>
           ))}
         </div>

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Mail, MapPin, Send, CheckCircle2 } from "lucide-react";
 import AnimatedSection from "@/components/AnimatedSection";
+import PageContainer from "@/components/PageContainer";
 import SectionHeader from "@/components/SectionHeader";
 import { GitHubIcon, LinkedInIcon } from "@/components/SocialIcons";
 import { siteConfig } from "@/data/mock";
@@ -17,9 +18,8 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="dot-pattern">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 py-20">
-        <SectionHeader
+    <PageContainer>
+      <SectionHeader
           title="Contact"
           subtitle="Have a project in mind or just want to say hi? Drop me a message."
         />
@@ -172,7 +172,6 @@ export default function ContactPage() {
             </form>
           </AnimatedSection>
         </div>
-      </div>
-    </div>
+    </PageContainer>
   );
 }
