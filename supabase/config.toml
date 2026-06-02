@@ -1,0 +1,10 @@
+# Supabase local dev config — linked to remote project portfolio
+# See: https://supabase.com/docs/guides/cli/config
+
+project_id = "scanphpjyuctnqigzyii"
+
+[api]
+enabled = true
+
+[db]
+major_version = 17
