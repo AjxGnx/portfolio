@@ -20,7 +20,6 @@ Built with **Next.js** (App Router), **React**, **Tailwind CSS**, **Framer Motio
 - **Project:** `portfolio` (`scanphpjyuctnqigzyii`)
 - **Migrations:** `supabase/migrations/`
 - **Env:** copy `.env.example` → `.env.local` (see [Supabase Dashboard → API](https://supabase.com/dashboard/project/scanphpjyuctnqigzyii/settings/api))
-- **Admin auth setup:** [docs/SUPABASE_AUTH_SETUP.md](docs/SUPABASE_AUTH_SETUP.md)
 
 Routes:
 
