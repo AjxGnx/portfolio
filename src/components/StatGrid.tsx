@@ -14,12 +14,10 @@ type StatGridProps = {
 export default function StatGrid({ stats, className }: StatGridProps) {
   return (
     <AnimatedSection className={`grid grid-cols-3 gap-3 mb-8 ${className ?? ""}`}>
-      {stats.map((stat, i) => (
+      {stats.map((stat) => (
         <div key={stat.label} className="glass rounded-xl p-4 text-center">
           <p
-            className={`text-2xl font-bold ${
-              i === 0 ? "gradient-text" : (stat.colorClass ?? "text-foreground")
-            }`}
+            className={`text-2xl font-bold ${stat.colorClass ?? "text-foreground"}`}
           >
             {stat.value}
           </p>

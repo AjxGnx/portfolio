@@ -33,7 +33,11 @@ export default function GamingPage() {
     filter === "all" ? games : games.filter((g) => g.status === filter);
 
   const stats = [
-    { value: games.filter((g) => g.status === "Completed").length, label: "Completed" },
+    {
+      value: games.filter((g) => g.status === "Completed").length,
+      label: "Completed",
+      colorClass: "gradient-text",
+    },
     { value: games.filter((g) => g.status === "Playing").length, label: "Playing", colorClass: "text-amber-400" },
     { value: games.filter((g) => g.status === "Backlog").length, label: "Backlog", colorClass: "text-blue-400" },
   ];

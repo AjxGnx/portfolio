@@ -36,7 +36,11 @@ export default function ReadingPage() {
   const categories = [...new Set(books.map((b) => b.category))];
 
   const stats = [
-    { value: books.filter((b) => b.status === "Read").length, label: "Read" },
+    {
+      value: books.filter((b) => b.status === "Read").length,
+      label: "Read",
+      colorClass: "gradient-text",
+    },
     { value: books.filter((b) => b.status === "Reading").length, label: "Reading", colorClass: "text-amber-400" },
     { value: books.filter((b) => b.status === "To Read").length, label: "To Read", colorClass: "text-blue-400" },
   ];
