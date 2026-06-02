@@ -1,8 +1,19 @@
+import { isAdminUser } from "@/lib/auth/admin";
 import { markContactMessageRead, getContactMessages } from "@/lib/data/portfolio";
+import { createClient } from "@/lib/supabase/server";
+import { isSupabaseConfigured } from "@/lib/supabase/env";
 import { revalidatePath } from "next/cache";
 
 async function markAsRead(formData: FormData) {
   "use server";
+  if (!isSupabaseConfigured()) return;
+
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!isAdminUser(user)) return;
+
   const id = String(formData.get("id") ?? "");
   if (!id) return;
   await markContactMessageRead(id);

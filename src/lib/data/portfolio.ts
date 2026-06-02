@@ -345,13 +345,15 @@ export async function insertContactMessage(
   });
 
   if (error) {
-    return { ok: false, error: error.message };
+    return { ok: false, error: "Failed to send message. Please try again." };
   }
 
   return { ok: true };
 }
 
 export async function getContactMessages(): Promise<ContactMessage[]> {
+  if (!isSupabaseConfigured()) return [];
+
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("contact_messages")
@@ -374,6 +376,8 @@ export async function getContactMessages(): Promise<ContactMessage[]> {
 export async function markContactMessageRead(
   id: string
 ): Promise<{ ok: boolean }> {
+  if (!isSupabaseConfigured()) return { ok: false };
+
   const supabase = await createClient();
   const { error } = await supabase
     .from("contact_messages")
@@ -384,6 +388,8 @@ export async function markContactMessageRead(
 }
 
 export async function getUnreadMessageCount(): Promise<number> {
+  if (!isSupabaseConfigured()) return 0;
+
   const supabase = await createClient();
   const { count, error } = await supabase
     .from("contact_messages")

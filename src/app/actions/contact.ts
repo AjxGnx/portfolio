@@ -10,7 +10,15 @@ export async function submitContactMessage(
     return { ok: false, error: "All fields are required" };
   }
 
-  if (input.message.length > 5000) {
+  if (input.name.trim().length > 200) {
+    return { ok: false, error: "Name is too long (max 200 characters)" };
+  }
+
+  if (input.subject.trim().length > 300) {
+    return { ok: false, error: "Subject is too long (max 300 characters)" };
+  }
+
+  if (input.message.trim().length > 5000) {
     return { ok: false, error: "Message is too long" };
   }
 

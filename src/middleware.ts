@@ -6,6 +6,27 @@ function isAdminRole(appMetadata: Record<string, unknown> | undefined): boolean 
   return appMetadata?.role === "admin";
 }
 
+function redirectWithSessionCookies(
+  request: NextRequest,
+  supabaseResponse: NextResponse,
+  pathname: string,
+  searchParams?: Record<string, string>
+) {
+  const url = request.nextUrl.clone();
+  url.pathname = pathname;
+  url.search = "";
+  if (searchParams) {
+    for (const [key, value] of Object.entries(searchParams)) {
+      url.searchParams.set(key, value);
+    }
+  }
+  const redirect = NextResponse.redirect(url, { status: 303 });
+  supabaseResponse.cookies.getAll().forEach((cookie) =>
+    redirect.cookies.set(cookie)
+  );
+  return redirect;
+}
+
 export async function middleware(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request });
 
@@ -44,26 +65,21 @@ export async function middleware(request: NextRequest) {
 
   if (isAdminRoute) {
     if (!user) {
-      const loginUrl = request.nextUrl.clone();
-      loginUrl.pathname = "/admin/login";
-      loginUrl.searchParams.set("next", pathname);
-      return NextResponse.redirect(loginUrl);
+      return redirectWithSessionCookies(request, supabaseResponse, "/admin/login", {
+        next: pathname,
+      });
     }
 
     if (!isAdminRole(user.app_metadata as Record<string, unknown>)) {
       await supabase.auth.signOut();
-      const loginUrl = request.nextUrl.clone();
-      loginUrl.pathname = "/admin/login";
-      loginUrl.searchParams.set("error", "forbidden");
-      return NextResponse.redirect(loginUrl);
+      return redirectWithSessionCookies(request, supabaseResponse, "/admin/login", {
+        error: "forbidden",
+      });
     }
   }
 
   if (isLoginRoute && user && isAdminRole(user.app_metadata as Record<string, unknown>)) {
-    const adminUrl = request.nextUrl.clone();
-    adminUrl.pathname = "/admin";
-    adminUrl.search = "";
-    return NextResponse.redirect(adminUrl);
+    return redirectWithSessionCookies(request, supabaseResponse, "/admin");
   }
 
   return supabaseResponse;
