@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Mail, Inbox } from "lucide-react";
+import { FileText, Inbox, Mail } from "lucide-react";
 import { getUnreadMessageCount } from "@/lib/data/portfolio";
 
 export default async function AdminDashboardPage() {
@@ -34,17 +34,24 @@ export default async function AdminDashboardPage() {
           </div>
         </Link>
 
-        <div className="glass rounded-2xl p-6 opacity-80">
+        <Link
+          href="/admin/content"
+          className="glass rounded-2xl p-6 hover:border-accent/30 transition-colors group"
+        >
           <div className="flex items-start gap-4">
-            <div className="rounded-xl bg-muted/10 p-3">
-              <Mail className="h-6 w-6 text-muted" />
+            <div className="rounded-xl bg-accent/10 p-3">
+              <FileText className="h-6 w-6 text-accent" />
             </div>
             <div>
-              <h2 className="font-semibold text-foreground">Content editor</h2>
-              <p className="text-sm text-muted mt-1">Coming in a future update</p>
+              <h2 className="font-semibold text-foreground group-hover:text-accent transition-colors">
+                Content editor
+              </h2>
+              <p className="text-sm text-muted mt-1">
+                Manage skills, projects, experience and more
+              </p>
             </div>
           </div>
-        </div>
+        </Link>
       </div>
     </div>
   );

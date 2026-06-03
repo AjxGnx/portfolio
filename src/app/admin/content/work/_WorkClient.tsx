@@ -1,0 +1,193 @@
+"use client";
+
+import { AdminModal } from "@/components/admin/AdminModal";
+import { AdminTable, type Column } from "@/components/admin/AdminTable";
+import { AlertCircle, Plus } from "lucide-react";
+import { useEffect, useState, useTransition } from "react";
+import { createWork, deleteWork, updateWork } from "./actions";
+
+type Work = {
+  id: string;
+  role: string;
+  company: string;
+  period: string;
+  location: string | null;
+  description: string;
+  technologies: string[];
+  sort_order: number;
+};
+
+const emptyForm = {
+  role: "",
+  company: "",
+  period: "",
+  location: "",
+  description: "",
+  technologies: "",
+  sort_order: "0",
+};
+
+const columns: Column<Work>[] = [
+  { key: "role", label: "Role" },
+  { key: "company", label: "Company" },
+  { key: "period", label: "Period" },
+];
+
+export function WorkClient({ items }: { items: Work[] }) {
+  const [open, setOpen] = useState(false);
+  const [editing, setEditing] = useState<Work | null>(null);
+  const [form, setForm] = useState(emptyForm);
+  const [error, setError] = useState<string | null>(null);
+  const [isPending, startTransition] = useTransition();
+
+  useEffect(() => {
+    if (editing) {
+      setForm({
+        role: editing.role,
+        company: editing.company,
+        period: editing.period,
+        location: editing.location ?? "",
+        description: editing.description,
+        technologies: editing.technologies.join(", "),
+        sort_order: String(editing.sort_order),
+      });
+    } else {
+      setForm(emptyForm);
+    }
+    setError(null);
+  }, [editing, open]);
+
+  const handleClose = () => {
+    setOpen(false);
+    setEditing(null);
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setError(null);
+    const fd = new FormData(e.currentTarget);
+    startTransition(async () => {
+      const result = editing
+        ? await updateWork(editing.id, fd)
+        : await createWork(fd);
+      if (result.ok) handleClose();
+      else setError(result.error);
+    });
+  };
+
+  const field = (
+    name: keyof typeof emptyForm,
+    label: string,
+    opts?: {
+      required?: boolean;
+      type?: string;
+      placeholder?: string;
+      textarea?: boolean;
+      rows?: number;
+    }
+  ) => (
+    <div>
+      <label className="block text-sm font-medium mb-1.5">{label}</label>
+      {opts?.textarea ? (
+        <textarea
+          name={name}
+          required={opts?.required ?? false}
+          value={form[name]}
+          onChange={(e) => setForm((f) => ({ ...f, [name]: e.target.value }))}
+          rows={opts.rows ?? 3}
+          placeholder={opts?.placeholder}
+          className="w-full rounded-xl border border-border/50 bg-background px-4 py-2.5 text-sm focus:outline-none focus:border-accent/50 resize-none"
+        />
+      ) : (
+        <input
+          name={name}
+          type={opts?.type ?? "text"}
+          required={opts?.required ?? false}
+          value={form[name]}
+          onChange={(e) => setForm((f) => ({ ...f, [name]: e.target.value }))}
+          placeholder={opts?.placeholder}
+          className="w-full rounded-xl border border-border/50 bg-background px-4 py-2.5 text-sm focus:outline-none focus:border-accent/50"
+        />
+      )}
+    </div>
+  );
+
+  return (
+    <>
+      <div className="flex items-center justify-between mb-6">
+        <p className="text-sm text-muted">{items.length} entry(ies)</p>
+        <button
+          onClick={() => {
+            setEditing(null);
+            setOpen(true);
+          }}
+          className="inline-flex items-center gap-2 rounded-xl bg-accent px-4 py-2 text-sm font-medium text-white hover:bg-accent/90 transition-colors"
+        >
+          <Plus className="h-4 w-4" />
+          New experience
+        </button>
+      </div>
+
+      <AdminTable
+        rows={items}
+        columns={columns}
+        onEdit={(row) => {
+          setEditing(row);
+          setOpen(true);
+        }}
+        onDelete={async (id) => {
+          await deleteWork(id);
+        }}
+        emptyMessage="No work experiences yet. Create the first one."
+      />
+
+      <AdminModal
+        open={open}
+        onClose={handleClose}
+        title={editing ? "Edit experience" : "New experience"}
+      >
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {error && (
+            <div className="flex items-center gap-2 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-400">
+              <AlertCircle className="h-4 w-4 shrink-0" />
+              {error}
+            </div>
+          )}
+          {field("role", "Role / Title", { required: true })}
+          {field("company", "Company", { required: true })}
+          {field("period", "Period", {
+            required: true,
+            placeholder: "e.g.: 2022 – Present",
+          })}
+          {field("location", "Location", { placeholder: "e.g.: Remote / New York" })}
+          {field("description", "Description", {
+            required: true,
+            textarea: true,
+            rows: 4,
+          })}
+          {field("technologies", "Technologies", {
+            placeholder: "React, TypeScript, Node.js (comma-separated)",
+          })}
+          {field("sort_order", "Order", { type: "number" })}
+
+          <div className="flex gap-3 pt-2">
+            <button
+              type="button"
+              onClick={handleClose}
+              className="flex-1 rounded-xl border border-border/50 px-4 py-2.5 text-sm font-medium text-muted hover:text-foreground transition-colors"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              disabled={isPending}
+              className="flex-1 rounded-xl bg-accent px-4 py-2.5 text-sm font-semibold text-white hover:bg-accent/90 disabled:opacity-60 transition-colors"
+            >
+              {isPending ? "Saving..." : "Save"}
+            </button>
+          </div>
+        </form>
+      </AdminModal>
+    </>
+  );
+}
