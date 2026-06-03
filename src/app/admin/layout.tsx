@@ -29,6 +29,12 @@ export default async function AdminLayout({
               >
                 Messages
               </Link>
+              <Link
+                href="/admin/content"
+                className="text-muted hover:text-accent transition-colors"
+              >
+                Content
+              </Link>
             </nav>
             <form action="/admin/logout" method="post">
               <button
