@@ -1,6 +1,7 @@
 "use server";
 
 import { getAdminClient, type ActionResult } from "@/lib/auth/requireAdmin";
+import { revalidatePortfolioContent } from "@/lib/cache/revalidate";
 import { revalidatePath } from "next/cache";
 
 const PATH = "/admin/content/skills";
@@ -18,6 +19,7 @@ export async function createSkill(formData: FormData): Promise<ActionResult> {
 
   if (error) return { ok: false, error: error.message };
   revalidatePath(PATH);
+  revalidatePortfolioContent();
   return { ok: true };
 }
 
@@ -40,6 +42,7 @@ export async function updateSkill(
 
   if (error) return { ok: false, error: error.message };
   revalidatePath(PATH);
+  revalidatePortfolioContent();
   return { ok: true };
 }
 
@@ -50,5 +53,6 @@ export async function deleteSkill(id: string): Promise<ActionResult> {
   const { error } = await supabase.from("skills").delete().eq("id", id);
   if (error) return { ok: false, error: error.message };
   revalidatePath(PATH);
+  revalidatePortfolioContent();
   return { ok: true };
 }

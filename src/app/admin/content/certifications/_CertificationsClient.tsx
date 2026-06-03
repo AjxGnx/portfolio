@@ -86,9 +86,7 @@ export function CertificationsClient({ items }: { items: Cert[] }) {
           setEditing(row);
           setOpen(true);
         }}
-        onDelete={async (id) => {
-          await deleteCertification(id);
-        }}
+        onDelete={deleteCertification}
         emptyMessage="No certifications yet."
       />
 

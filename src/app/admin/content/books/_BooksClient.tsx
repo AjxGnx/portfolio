@@ -109,9 +109,7 @@ export function BooksClient({ items }: { items: Book[] }) {
           setEditing(row);
           setOpen(true);
         }}
-        onDelete={async (id) => {
-          await deleteBook(id);
-        }}
+        onDelete={deleteBook}
         emptyMessage="No books yet."
       />
 

@@ -121,9 +121,7 @@ export function ProjectsClient({ items }: { items: Project[] }) {
           setEditing(row);
           setOpen(true);
         }}
-        onDelete={async (id) => {
-          await deleteProject(id);
-        }}
+        onDelete={deleteProject}
         emptyMessage="No projects yet."
       />
 

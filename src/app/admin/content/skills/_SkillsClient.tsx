@@ -89,9 +89,7 @@ export function SkillsClient({ skills }: { skills: Skill[] }) {
     });
   };
 
-  const handleDelete = async (id: string) => {
-    await deleteSkill(id);
-  };
+  const handleDelete = (id: string) => deleteSkill(id);
 
   return (
     <>

@@ -135,9 +135,7 @@ export function WorkClient({ items }: { items: Work[] }) {
           setEditing(row);
           setOpen(true);
         }}
-        onDelete={async (id) => {
-          await deleteWork(id);
-        }}
+        onDelete={deleteWork}
         emptyMessage="No work experiences yet. Create the first one."
       />
 

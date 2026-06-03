@@ -1,6 +1,7 @@
 "use server";
 
 import { getAdminClient, type ActionResult } from "@/lib/auth/requireAdmin";
+import { revalidatePortfolioContent } from "@/lib/cache/revalidate";
 import type { BookStatus } from "@/lib/supabase/database.types";
 import { revalidatePath } from "next/cache";
 
@@ -23,6 +24,7 @@ export async function createBook(formData: FormData): Promise<ActionResult> {
 
   if (error) return { ok: false, error: error.message };
   revalidatePath(PATH);
+  revalidatePortfolioContent();
   return { ok: true };
 }
 
@@ -49,6 +51,7 @@ export async function updateBook(
 
   if (error) return { ok: false, error: error.message };
   revalidatePath(PATH);
+  revalidatePortfolioContent();
   return { ok: true };
 }
 
@@ -59,5 +62,6 @@ export async function deleteBook(id: string): Promise<ActionResult> {
   const { error } = await supabase.from("books").delete().eq("id", id);
   if (error) return { ok: false, error: error.message };
   revalidatePath(PATH);
+  revalidatePortfolioContent();
   return { ok: true };
 }

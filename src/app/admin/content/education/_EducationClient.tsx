@@ -93,9 +93,7 @@ export function EducationClient({ items }: { items: Education[] }) {
           setEditing(row);
           setOpen(true);
         }}
-        onDelete={async (id) => {
-          await deleteEducation(id);
-        }}
+        onDelete={deleteEducation}
         emptyMessage="No education entries yet."
       />
 

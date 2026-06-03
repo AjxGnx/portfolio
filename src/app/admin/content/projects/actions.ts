@@ -1,6 +1,7 @@
 "use server";
 
 import { getAdminClient, type ActionResult } from "@/lib/auth/requireAdmin";
+import { revalidatePortfolioContent } from "@/lib/cache/revalidate";
 import { revalidatePath } from "next/cache";
 
 const PATH = "/admin/content/projects";
@@ -29,6 +30,7 @@ export async function createProject(formData: FormData): Promise<ActionResult> {
 
   if (error) return { ok: false, error: error.message };
   revalidatePath(PATH);
+  revalidatePortfolioContent();
   return { ok: true };
 }
 
@@ -55,6 +57,7 @@ export async function updateProject(
 
   if (error) return { ok: false, error: error.message };
   revalidatePath(PATH);
+  revalidatePortfolioContent();
   return { ok: true };
 }
 
@@ -68,5 +71,6 @@ export async function deleteProject(id: string): Promise<ActionResult> {
     .eq("id", id);
   if (error) return { ok: false, error: error.message };
   revalidatePath(PATH);
+  revalidatePortfolioContent();
   return { ok: true };
 }

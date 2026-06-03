@@ -9,7 +9,7 @@ export default async function AdminDashboardPage() {
     <div className="mx-auto max-w-6xl px-4 sm:px-6 py-12">
       <h1 className="text-2xl font-bold mb-2">Admin dashboard</h1>
       <p className="text-muted text-sm mb-8">
-        Manage contact messages and portfolio content (CRUD UI coming soon).
+        Manage contact messages and portfolio content.
       </p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-lg">

@@ -1,6 +1,7 @@
 "use server";
 
 import { getAdminClient, type ActionResult } from "@/lib/auth/requireAdmin";
+import { revalidatePortfolioContent } from "@/lib/cache/revalidate";
 import { revalidatePath } from "next/cache";
 
 const PATH = "/admin/content/education";
@@ -21,6 +22,7 @@ export async function createEducation(
 
   if (error) return { ok: false, error: error.message };
   revalidatePath(PATH);
+  revalidatePortfolioContent();
   return { ok: true };
 }
 
@@ -44,6 +46,7 @@ export async function updateEducation(
 
   if (error) return { ok: false, error: error.message };
   revalidatePath(PATH);
+  revalidatePortfolioContent();
   return { ok: true };
 }
 
@@ -57,5 +60,6 @@ export async function deleteEducation(id: string): Promise<ActionResult> {
     .eq("id", id);
   if (error) return { ok: false, error: error.message };
   revalidatePath(PATH);
+  revalidatePortfolioContent();
   return { ok: true };
 }

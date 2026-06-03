@@ -109,9 +109,7 @@ export function GamesClient({ items }: { items: Game[] }) {
           setEditing(row);
           setOpen(true);
         }}
-        onDelete={async (id) => {
-          await deleteGame(id);
-        }}
+        onDelete={deleteGame}
         emptyMessage="No games yet."
       />
 

@@ -1,6 +1,7 @@
 "use server";
 
 import { getAdminClient, type ActionResult } from "@/lib/auth/requireAdmin";
+import { revalidatePortfolioContent } from "@/lib/cache/revalidate";
 import { revalidatePath } from "next/cache";
 
 const PATH = "/admin/content/site-settings";
@@ -31,6 +32,6 @@ export async function updateSiteSettings(
 
   if (error) return { ok: false, error: error.message };
   revalidatePath(PATH);
-  revalidatePath("/");
+  revalidatePortfolioContent();
   return { ok: true };
 }
