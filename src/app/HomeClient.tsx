@@ -66,24 +66,24 @@ export default function HomeClient({ siteConfig, topSkills }: Props) {
 
         <div className="relative mx-auto max-w-6xl px-4 sm:px-6 py-20">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            {/* Left column: text, buttons, and terminal */}
-            <div>
-              {/* Photo on mobile only — desktop uses the right column */}
-              <div className="block lg:hidden mb-8 flex justify-center">
-                <div className="relative w-64 sm:w-80">
-                  <div className="absolute -inset-3 bg-accent/15 rounded-3xl blur-2xl" />
-                  <div className="absolute -inset-0.5 bg-gradient-to-br from-accent/30 to-accent-secondary/30 rounded-2xl" />
-                  <Image
-                    src="/hero.jpg"
-                    alt={siteConfig.name}
-                    width={471}
-                    height={446}
-                    className="relative rounded-2xl shadow-2xl w-full h-auto"
-                    priority
-                  />
-                </div>
+            {/* Photo: above text on mobile (order-1), right column on desktop (order-2) */}
+            <div className="flex justify-center items-center order-1 lg:order-2 animate-fade-in-up-2">
+              <div className="relative w-64 sm:w-80 lg:w-full">
+                <div className="absolute -inset-4 bg-accent/15 rounded-3xl blur-2xl" />
+                <div className="absolute -inset-0.5 bg-gradient-to-br from-accent/30 to-accent-secondary/30 rounded-2xl" />
+                <Image
+                  src="/hero.jpg"
+                  alt={siteConfig.name}
+                  width={471}
+                  height={446}
+                  className="relative rounded-2xl shadow-2xl w-full h-auto"
+                  priority
+                />
               </div>
+            </div>
 
+            {/* Left column: text, buttons, and terminal (order-2 on mobile, order-1 on desktop) */}
+            <div className="order-2 lg:order-1">
               <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight leading-[1.1] mb-6 animate-fade-in-up">
                 Hey, I&apos;m{" "}
                 <span className="gradient-text">{siteConfig.name}</span>
@@ -167,22 +167,6 @@ export default function HomeClient({ siteConfig, topSkills }: Props) {
                     <span className="text-foreground animate-pulse">▊</span>
                   </code>
                 </pre>
-              </div>
-            </div>
-
-            {/* Right column: photo */}
-            <div className="hidden lg:flex justify-center items-center animate-fade-in-up-2">
-              <div className="relative w-full">
-                <div className="absolute -inset-4 bg-accent/15 rounded-3xl blur-2xl" />
-                <div className="absolute -inset-0.5 bg-gradient-to-br from-accent/30 to-accent-secondary/30 rounded-2xl" />
-                <Image
-                  src="/hero.jpg"
-                  alt={siteConfig.name}
-                  width={471}
-                  height={446}
-                  className="relative rounded-2xl shadow-2xl w-full h-auto"
-                  priority
-                />
               </div>
             </div>
           </div>
