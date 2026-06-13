@@ -46,7 +46,7 @@ export default function AboutClient({
           <div className="glass rounded-2xl p-6 text-center">
             <div className="w-32 h-32 mx-auto rounded-full bg-gradient-to-br from-accent to-accent-secondary p-0.5 mb-4">
               <Image
-                src="/profile.jpg"
+                src="/profile-v2.jpg"
                 alt="Alirio Gutierrez"
                 width={128}
                 height={128}

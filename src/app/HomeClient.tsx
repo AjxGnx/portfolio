@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import {
   ArrowRight,
   Code2,
@@ -64,90 +65,125 @@ export default function HomeClient({ siteConfig, topSkills }: Props) {
         </div>
 
         <div className="relative mx-auto max-w-6xl px-4 sm:px-6 py-20">
-          <div className="max-w-3xl">
-            <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight leading-[1.1] mb-6 animate-fade-in-up">
-              Hey, I&apos;m{" "}
-              <span className="gradient-text">{siteConfig.name}</span>
-            </h1>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Left column: text, buttons, and terminal */}
+            <div>
+              {/* Photo on mobile only — desktop uses the right column */}
+              <div className="block lg:hidden mb-8 flex justify-center">
+                <div className="relative w-64 sm:w-80">
+                  <div className="absolute -inset-3 bg-accent/15 rounded-3xl blur-2xl" />
+                  <div className="absolute -inset-0.5 bg-gradient-to-br from-accent/30 to-accent-secondary/30 rounded-2xl" />
+                  <Image
+                    src="/hero.jpg"
+                    alt={siteConfig.name}
+                    width={471}
+                    height={446}
+                    className="relative rounded-2xl shadow-2xl w-full h-auto"
+                    priority
+                  />
+                </div>
+              </div>
 
-            <p className="text-base sm:text-lg text-accent-secondary font-medium mb-2 animate-fade-in-up-1">
-              {siteConfig.shortTitle}
-            </p>
+              <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight leading-[1.1] mb-6 animate-fade-in-up">
+                Hey, I&apos;m{" "}
+                <span className="gradient-text">{siteConfig.name}</span>
+              </h1>
 
-            <p className="text-base sm:text-lg text-muted max-w-xl mb-8 animate-fade-in-up-2">
-              {siteConfig.description}
-            </p>
+              <p className="text-base sm:text-lg text-accent-secondary font-medium mb-2 animate-fade-in-up-1">
+                {siteConfig.shortTitle}
+              </p>
 
-            <div className="flex flex-wrap items-center gap-4 animate-fade-in-up-3">
-              <Link
-                href="/projects"
-                className="inline-flex items-center gap-2 rounded-xl bg-accent px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-accent/90 hover:scale-105 active:scale-95"
-              >
-                View Projects
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-              <Link
-                href="/contact"
-                className="inline-flex items-center gap-2 rounded-xl border border-border px-6 py-3 text-sm font-semibold text-foreground transition-all hover:bg-card hover:border-accent/30 hover:scale-105 active:scale-95"
-              >
-                Get in Touch
-              </Link>
-              <div className="flex items-center gap-3 ml-2">
-                <a
-                  href={siteConfig.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-muted hover:text-accent transition-colors"
+              <p className="text-base sm:text-lg text-muted max-w-xl mb-8 animate-fade-in-up-2">
+                {siteConfig.description}
+              </p>
+
+              <div className="flex flex-wrap items-center gap-4 animate-fade-in-up-3">
+                <Link
+                  href="/projects"
+                  className="inline-flex items-center gap-2 rounded-xl bg-accent px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-accent/90 hover:scale-105 active:scale-95"
                 >
-                  <GitHubIcon className="h-5 w-5" />
-                </a>
-                <a
-                  href={siteConfig.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-muted hover:text-accent transition-colors"
+                  View Projects
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+                <Link
+                  href="/contact"
+                  className="inline-flex items-center gap-2 rounded-xl border border-border px-6 py-3 text-sm font-semibold text-foreground transition-all hover:bg-card hover:border-accent/30 hover:scale-105 active:scale-95"
                 >
-                  <LinkedInIcon className="h-5 w-5" />
-                </a>
+                  Get in Touch
+                </Link>
+                <div className="flex items-center gap-3 ml-2">
+                  <a
+                    href={siteConfig.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-muted hover:text-accent transition-colors"
+                  >
+                    <GitHubIcon className="h-5 w-5" />
+                  </a>
+                  <a
+                    href={siteConfig.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-muted hover:text-accent transition-colors"
+                  >
+                    <LinkedInIcon className="h-5 w-5" />
+                  </a>
+                </div>
+              </div>
+
+              <div className="mt-12 glass rounded-xl p-4 max-w-md animate-fade-in-up-4">
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="flex gap-1.5">
+                    <div className="w-2.5 h-2.5 rounded-full bg-red-500/70" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/70" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-green-500/70" />
+                  </div>
+                  <span className="text-xs text-muted font-mono ml-2">
+                    <Terminal className="h-3 w-3 inline mr-1" />
+                    terminal
+                  </span>
+                </div>
+                <pre className="font-mono text-xs sm:text-sm text-muted leading-relaxed">
+                  <code>
+                    <span className="text-accent">$</span>{" "}
+                    <span className="text-foreground">whoami</span>
+                    {"\n"}
+                    <span className="text-accent-secondary">→</span> Senior Backend
+                    Developer & Tech Lead
+                    {"\n"}
+                    <span className="text-accent">$</span>{" "}
+                    <span className="text-foreground">cat interests.txt</span>
+                    {"\n"}
+                    <span className="text-accent-secondary">→</span> Go, Python,
+                    Node.js, Kafka
+                    {"\n"}
+                    <span className="text-accent">$</span>{" "}
+                    <span className="text-foreground">cat hobbies.txt</span>
+                    {"\n"}
+                    <span className="text-accent-secondary">→</span> books, gaming,
+                    learning
+                    {"\n"}
+                    <span className="text-accent">$</span>{" "}
+                    <span className="text-foreground animate-pulse">▊</span>
+                  </code>
+                </pre>
               </div>
             </div>
 
-            <div className="mt-12 glass rounded-xl p-4 max-w-md animate-fade-in-up-4">
-              <div className="flex items-center gap-2 mb-3">
-                <div className="flex gap-1.5">
-                  <div className="w-2.5 h-2.5 rounded-full bg-red-500/70" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/70" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-green-500/70" />
-                </div>
-                <span className="text-xs text-muted font-mono ml-2">
-                  <Terminal className="h-3 w-3 inline mr-1" />
-                  terminal
-                </span>
+            {/* Right column: photo */}
+            <div className="hidden lg:flex justify-center items-center animate-fade-in-up-2">
+              <div className="relative w-full">
+                <div className="absolute -inset-4 bg-accent/15 rounded-3xl blur-2xl" />
+                <div className="absolute -inset-0.5 bg-gradient-to-br from-accent/30 to-accent-secondary/30 rounded-2xl" />
+                <Image
+                  src="/hero.jpg"
+                  alt={siteConfig.name}
+                  width={471}
+                  height={446}
+                  className="relative rounded-2xl shadow-2xl w-full h-auto"
+                  priority
+                />
               </div>
-              <pre className="font-mono text-xs sm:text-sm text-muted leading-relaxed">
-                <code>
-                  <span className="text-accent">$</span>{" "}
-                  <span className="text-foreground">whoami</span>
-                  {"\n"}
-                  <span className="text-accent-secondary">→</span> Senior Backend
-                  Developer & Tech Lead
-                  {"\n"}
-                  <span className="text-accent">$</span>{" "}
-                  <span className="text-foreground">cat interests.txt</span>
-                  {"\n"}
-                  <span className="text-accent-secondary">→</span> Go, Python,
-                  Node.js, Kafka
-                  {"\n"}
-                  <span className="text-accent">$</span>{" "}
-                  <span className="text-foreground">cat hobbies.txt</span>
-                  {"\n"}
-                  <span className="text-accent-secondary">→</span> books, gaming,
-                  learning
-                  {"\n"}
-                  <span className="text-accent">$</span>{" "}
-                  <span className="text-foreground animate-pulse">▊</span>
-                </code>
-              </pre>
             </div>
           </div>
         </div>
