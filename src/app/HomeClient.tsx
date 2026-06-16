@@ -27,7 +27,7 @@ const highlights = [
   {
     icon: BookOpen,
     title: "Reading",
-    description: "Dev books, sci-fi novels, and more",
+    description: "Dev books, good reads, and more",
     href: "/reading",
     color: "text-cyan-400",
     bg: "bg-cyan-400/10",
