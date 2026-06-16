@@ -94,10 +94,8 @@ export default function HomeClient({ siteConfig, topSkills }: Props) {
               </p>
 
               <p className="text-sm sm:text-base text-muted max-w-xl mb-3 animate-fade-in-up-2">
-                {siteConfig.name} is a software engineer based in {siteConfig.location} with
-                over 7 years of experience building scalable backend systems at companies
-                like Rappi, Platzi, and Gipsyy — platforms that serve millions of users
-                across Latin America.
+                {siteConfig.name} — {siteConfig.shortTitle}. Based in{" "}
+                {siteConfig.location}.
               </p>
 
               <p className="text-sm sm:text-base text-muted max-w-xl mb-3 animate-fade-in-up-2">
@@ -224,10 +222,8 @@ export default function HomeClient({ siteConfig, topSkills }: Props) {
             Tech <span className="gradient-text">Stack</span>
           </h2>
           <p className="text-sm text-muted max-w-2xl">
-            A selection of the technologies I work with most. My core focus is backend
-            development with Go, Python, and Node.js — complemented by deep experience in
-            event streaming with Apache Kafka, relational and document databases, and cloud
-            infrastructure on AWS and GCP.
+            A selection of the technologies I work with most, including{" "}
+            {topSkills.map((skill) => skill.name).join(", ")}.
           </p>
         </AnimatedSection>
 

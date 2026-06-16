@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import {
   DEFAULT_DESCRIPTION,
   DEFAULT_TITLE,
-  OG_IMAGE,
   SITE_NAME,
   SITE_URL,
 } from "@/lib/seo/site";
@@ -34,13 +33,11 @@ export function createPageMetadata({
       siteName: SITE_NAME,
       locale: "en_US",
       type: "website",
-      images: [OG_IMAGE],
     },
     twitter: {
       card: "summary_large_image",
       title: pageTitle,
       description,
-      images: [OG_IMAGE.url],
     },
   };
 }
@@ -74,13 +71,11 @@ export const rootMetadata: Metadata = {
     siteName: SITE_NAME,
     locale: "en_US",
     type: "website",
-    images: [OG_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
     title: DEFAULT_TITLE,
     description: DEFAULT_DESCRIPTION,
-    images: [OG_IMAGE.url],
   },
   icons: {
     icon: "/profile-v2.jpg",

@@ -2,13 +2,9 @@ import { Geist, Geist_Mono } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import JsonLd from "@/components/JsonLd";
+import { getSiteConfig } from "@/lib/data/portfolio";
 import { rootMetadata } from "@/lib/seo/metadata";
-import {
-  DEFAULT_DESCRIPTION,
-  SITE_NAME,
-  SITE_URL,
-  SOCIAL,
-} from "@/lib/seo/site";
+import { SITE_URL } from "@/lib/seo/site";
 import "./globals.css";
 
 export const metadata = rootMetadata;
@@ -23,47 +19,45 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const personSchema = {
-  "@context": "https://schema.org",
-  "@type": "Person",
-  name: SITE_NAME,
-  url: SITE_URL,
-  image: `${SITE_URL}/hero.jpg`,
-  jobTitle: "Tech Lead & Senior Backend Developer",
-  description: DEFAULT_DESCRIPTION,
-  email: SOCIAL.email,
-  sameAs: [SOCIAL.github, SOCIAL.linkedin],
-  knowsAbout: [
-    "Go",
-    "Python",
-    "Node.js",
-    "Microservices",
-    "Apache Kafka",
-    "PostgreSQL",
-  ],
-  worksFor: {
-    "@type": "Organization",
-    name: "Gipsyy",
-  },
-};
-
-const websiteSchema = {
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  name: SITE_NAME,
-  url: SITE_URL,
-  description: DEFAULT_DESCRIPTION,
-  author: {
-    "@type": "Person",
-    name: SITE_NAME,
-  },
-};
-
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const siteConfig = await getSiteConfig();
+
+  const personSchema = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: siteConfig.name,
+    url: SITE_URL,
+    image: `${SITE_URL}/hero.jpg`,
+    jobTitle: siteConfig.shortTitle,
+    description: siteConfig.description,
+    email: siteConfig.email,
+    sameAs: [siteConfig.github, siteConfig.linkedin],
+    knowsAbout: [
+      "Go",
+      "Python",
+      "Node.js",
+      "Microservices",
+      "Apache Kafka",
+      "PostgreSQL",
+    ],
+  };
+
+  const websiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: siteConfig.name,
+    url: SITE_URL,
+    description: siteConfig.description,
+    author: {
+      "@type": "Person",
+      name: siteConfig.name,
+    },
+  };
+
   return (
     <html
       lang="en"
