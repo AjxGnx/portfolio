@@ -15,7 +15,7 @@ Personal site for **Alirio Gutierrez** — senior backend developer and tech lea
 
 ## Stack
 
-Next.js (App Router), React, TypeScript, Tailwind CSS, Framer Motion, and Supabase for content and auth. Without Supabase env vars, the app falls back to static data in `src/data/mock.ts`.
+Next.js (App Router), React, TypeScript, Tailwind CSS, Framer Motion, and Supabase for content, auth, and contact storage. Without Supabase env vars, public pages fall back to static data in `src/data/mock.ts`.
 
 ## Local development
 
@@ -25,7 +25,7 @@ Next.js (App Router), React, TypeScript, Tailwind CSS, Framer Motion, and Supaba
 git clone https://github.com/AjxGnx/portfolio.git
 cd portfolio
 npm install
-cp .env.example .env.local   # optional — only needed for Supabase-backed content
+cp .env.example .env.local   # optional — content, admin auth, and contact storage
 npm run dev
 ```
 
