@@ -1,9 +1,11 @@
-import type { Metadata } from "next";
+import { createPageMetadata } from "@/lib/seo/metadata";
 
-export const metadata: Metadata = {
+export const metadata = createPageMetadata({
   title: "Reading",
-  description: "Books recommended by Alirio Gutierrez. Development, sci-fi, and productivity.",
-};
+  description:
+    "Books recommended by Alirio Gutierrez — software engineering, sci-fi, productivity, and development titles that shaped his career as a backend developer.",
+  path: "/reading",
+});
 
 export default function ReadingLayout({ children }: { children: React.ReactNode }) {
   return children;

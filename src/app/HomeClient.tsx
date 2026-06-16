@@ -89,12 +89,21 @@ export default function HomeClient({ siteConfig, topSkills }: Props) {
                 <span className="gradient-text">{siteConfig.name}</span>
               </h1>
 
-              <p className="text-base sm:text-lg text-accent-secondary font-medium mb-2 animate-fade-in-up-1">
+              <p className="text-base sm:text-lg text-accent-secondary font-medium mb-4 animate-fade-in-up-1">
                 {siteConfig.shortTitle}
               </p>
 
-              <p className="text-base sm:text-lg text-muted max-w-xl mb-8 animate-fade-in-up-2">
+              <p className="text-sm sm:text-base text-muted max-w-xl mb-3 animate-fade-in-up-2">
+                {siteConfig.name} — {siteConfig.shortTitle}. Based in{" "}
+                {siteConfig.location}.
+              </p>
+
+              <p className="text-sm sm:text-base text-muted max-w-xl mb-3 animate-fade-in-up-2">
                 {siteConfig.description}
+              </p>
+
+              <p className="text-sm sm:text-base text-muted max-w-xl mb-8 animate-fade-in-up-2">
+                {siteConfig.bio}
               </p>
 
               <div className="flex flex-wrap items-center gap-4 animate-fade-in-up-3">
@@ -209,9 +218,13 @@ export default function HomeClient({ siteConfig, topSkills }: Props) {
 
       <section className="mx-auto max-w-6xl px-4 sm:px-6 py-20 border-t border-border/50">
         <AnimatedSection className="mb-8">
-          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-3">
             Tech <span className="gradient-text">Stack</span>
           </h2>
+          <p className="text-sm text-muted max-w-2xl">
+            A selection of the technologies I work with most, including{" "}
+            {topSkills.map((skill) => skill.name).join(", ")}.
+          </p>
         </AnimatedSection>
 
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
