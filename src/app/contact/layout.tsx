@@ -1,9 +1,11 @@
-import type { Metadata } from "next";
+import { createPageMetadata } from "@/lib/seo/metadata";
 
-export const metadata: Metadata = {
+export const metadata = createPageMetadata({
   title: "Contact",
-  description: "Get in touch with Alirio Gutierrez for software development projects and collaborations.",
-};
+  description:
+    "Contact Alirio Gutierrez for software development projects, tech leadership roles, and collaborations. Based in Bogotá, Colombia — available for remote work.",
+  path: "/contact",
+});
 
 export default function ContactLayout({ children }: { children: React.ReactNode }) {
   return children;

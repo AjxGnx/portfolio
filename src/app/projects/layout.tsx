@@ -1,9 +1,11 @@
-import type { Metadata } from "next";
+import { createPageMetadata } from "@/lib/seo/metadata";
 
-export const metadata: Metadata = {
+export const metadata = createPageMetadata({
   title: "Projects",
-  description: "Software projects by Alirio Gutierrez. Microservices, APIs, and backend solutions with Go, Python, and Node.js.",
-};
+  description:
+    "Software projects by Alirio Gutierrez — microservices, event-driven systems, and backend platforms built with Go, Python, Node.js, Kafka, and PostgreSQL.",
+  path: "/projects",
+});
 
 export default function ProjectsLayout({ children }: { children: React.ReactNode }) {
   return children;

@@ -1,8 +1,17 @@
-import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import JsonLd from "@/components/JsonLd";
+import { rootMetadata } from "@/lib/seo/metadata";
+import {
+  DEFAULT_DESCRIPTION,
+  SITE_NAME,
+  SITE_URL,
+  SOCIAL,
+} from "@/lib/seo/site";
 import "./globals.css";
+
+export const metadata = rootMetadata;
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,21 +23,39 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: {
-    default: "Alirio Gutierrez | Tech Lead & Senior Backend Developer",
-    template: "%s | Alirio Gutierrez",
-  },
-  description:
-    "Tech Lead & Senior Backend Developer. Go, Python, Node.js. Building scalable systems at Gipsyy, ex-Rappi, ex-Platzi.",
-  authors: [
-    { name: "Alirio Gutierrez", url: "https://github.com/AjxGnx" },
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: SITE_NAME,
+  url: SITE_URL,
+  image: `${SITE_URL}/hero.jpg`,
+  jobTitle: "Tech Lead & Senior Backend Developer",
+  description: DEFAULT_DESCRIPTION,
+  email: SOCIAL.email,
+  sameAs: [SOCIAL.github, SOCIAL.linkedin],
+  knowsAbout: [
+    "Go",
+    "Python",
+    "Node.js",
+    "Microservices",
+    "Apache Kafka",
+    "PostgreSQL",
   ],
-  openGraph: {
-    title: "Alirio Gutierrez | Tech Lead & Senior Backend Developer",
-    description:
-      "Tech Lead & Senior Backend Developer. Go, Python, Node.js. Building scalable systems at Gipsyy, ex-Rappi, ex-Platzi.",
-    type: "website",
+  worksFor: {
+    "@type": "Organization",
+    name: "Gipsyy",
+  },
+};
+
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: SITE_NAME,
+  url: SITE_URL,
+  description: DEFAULT_DESCRIPTION,
+  author: {
+    "@type": "Person",
+    name: SITE_NAME,
   },
 };
 
@@ -43,6 +70,8 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        <JsonLd data={personSchema} />
+        <JsonLd data={websiteSchema} />
         <Navbar />
         <main className="flex-1 pt-16">{children}</main>
         <Footer />
