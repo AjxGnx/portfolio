@@ -1,67 +1,42 @@
 # Portfolio
 
-Personal site and portfolio for **Alirio Gutierrez** — senior backend developer and tech lead. It presents who I am, selected projects, reading and gaming interests, experience, and ways to get in touch.
+Personal site for **Alirio Gutierrez** — senior backend developer and tech lead.
 
-**GitHub:** [github.com/AjxGnx/portfolio](https://github.com/AjxGnx/portfolio)
+**Live:** [aliriogutierrez.com](https://www.aliriogutierrez.com) · **Repo:** [github.com/AjxGnx/portfolio](https://github.com/AjxGnx/portfolio)
 
-## What’s in the app
+## Pages
 
-- **Home** — hero, highlights (projects, reading, gaming, experience), and skill bars
+- **Home** — hero, highlights, and skill bars
 - **Projects** — featured work and tech stack
-- **Reading** — books I’m into
+- **Reading** — books I recommend
 - **Gaming** — games I play
-- **About** — background and experience timeline
-- **Contact** — ways to reach me
+- **About** — background and experience
+- **Contact** — get in touch
 
-Built with **Next.js** (App Router), **React**, **Tailwind CSS**, **Framer Motion**, **Lucide** icons, and **Supabase** (Postgres + Auth). Public content is loaded from Supabase; `src/data/mock.ts` remains as a fallback when env vars are missing.
+## Stack
 
-## Supabase
+Next.js (App Router), React, TypeScript, Tailwind CSS, Framer Motion, and Supabase for content, auth, and contact storage. Without Supabase env vars, public pages fall back to static data in `src/data/mock.ts`.
 
-- **Project:** `portfolio` (`scanphpjyuctnqigzyii`)
-- **Migrations:** `supabase/migrations/`
-- **Env:** copy `.env.example` → `.env.local` (see [Supabase Dashboard → API](https://supabase.com/dashboard/project/scanphpjyuctnqigzyii/settings/api))
+## Local development
 
-Routes:
-
-- `/admin/login` — admin sign-in (email + password)
-- `/admin` — dashboard
-- `/admin/messages` — contact inbox
-
-## Requirements
-
-- **Node.js** 20+ (recommended: match the version you use locally or on Vercel)
-
-## Install and run
+**Requirements:** Node.js 20+
 
 ```bash
 git clone https://github.com/AjxGnx/portfolio.git
 cd portfolio
 npm install
-cp .env.example .env.local
-# Edit .env.local with your Supabase URL and publishable key
-```
-
-Development server:
-
-```bash
+cp .env.example .env.local   # optional — content, admin auth, and contact storage
 npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000).
 
-Production build:
-
 ```bash
-npm run build
-npm start
-```
-
-Lint:
-
-```bash
-npm run lint
+npm run build   # production build
+npm start       # run production server locally
+npm run lint    # ESLint
 ```
 
 ---
 
-**AI First** — this project is developed and iterated with AI-assisted workflows (editor agents, reviews, and refactors) as a core part of how the codebase evolves.
+**AI First** — developed and iterated with AI-assisted workflows as part of how this codebase evolves.
