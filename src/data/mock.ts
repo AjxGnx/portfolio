@@ -7,7 +7,7 @@ export const siteConfig = {
   shortTitle: "Tech Lead & Senior Backend Developer",
   description:
     "Passionate Software Developer who truly believes that tackling new challenges helps us grow professionally and provides constant learning opportunities. With a focus on leadership and teamwork, I'm always ready to take on challenges and find innovative solutions.",
-  bio: "My commitment to continuous learning drives me to seek new opportunities to grow and contribute to the success of the projects I'm part of. Outside of code, you'll find me reading a good sci-fi book or exploring worlds in video games.",
+  bio: "My commitment to continuous learning drives me to seek new opportunities to grow and contribute to the success of the projects I'm part of. Outside of code, you'll find me reading a good book or exploring worlds in video games.",
   email: "alirio1925@gmail.com",
   linkedin: "https://www.linkedin.com/in/alirio-gutierrez-41a4a4197/",
   github: GITHUB_PROFILE_URL,
@@ -208,28 +208,6 @@ export const books = [
     category: "Development",
   },
   {
-    id: 3,
-    title: "Dune",
-    author: "Frank Herbert",
-    cover: "/books/dune.jpg",
-    rating: 5,
-    status: "Read" as const,
-    review:
-      "A sci-fi masterpiece. The worldbuilding is breathtaking.",
-    category: "Sci-Fi",
-  },
-  {
-    id: 4,
-    title: "Neuromancer",
-    author: "William Gibson",
-    cover: "/books/neuromancer.jpg",
-    rating: 4,
-    status: "Read" as const,
-    review:
-      "The book that defined cyberpunk. Visionary and fascinating.",
-    category: "Sci-Fi",
-  },
-  {
     id: 5,
     title: "Designing Data-Intensive Applications",
     author: "Martin Kleppmann",
@@ -239,16 +217,6 @@ export const books = [
     review:
       "The bible of distributed systems. Every chapter is a gem.",
     category: "Development",
-  },
-  {
-    id: 6,
-    title: "Project Hail Mary",
-    author: "Andy Weir",
-    cover: "/books/hailmary.jpg",
-    rating: 4,
-    status: "To Read" as const,
-    review: "",
-    category: "Sci-Fi",
   },
   {
     id: 7,
