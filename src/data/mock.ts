@@ -6,8 +6,8 @@ export const siteConfig = {
   title: "Golang Developer | Python | NodeJS | Senior Backend Developer | Engineering Lead",
   shortTitle: "Tech Lead & Senior Backend Developer",
   description:
-    "Passionate Software Developer who truly believes that tackling new challenges helps us grow professionally and provides constant learning opportunities. With a focus on leadership and teamwork, I'm always ready to take on challenges and find innovative solutions.",
-  bio: "My commitment to continuous learning drives me to seek new opportunities to grow and contribute to the success of the projects I'm part of. Outside of code, you'll find me reading a good book or exploring worlds in video games.",
+    "I build scalable backends with Go, Python, and Node.js — microservices, APIs, and data pipelines for products at scale.",
+  bio: "Passionate about clean architecture and teamwork, I help engineering teams ship maintainable services with strong testing practices and clear technical ownership. This portfolio highlights selected projects and professional experience at companies such as Gipsyy, Rappi, and Platzi — building transportation, education, and marketplace platforms at scale. My commitment to continuous learning drives me to grow with every challenge. Outside of code, you'll find me reading a good book or exploring worlds in video games.",
   email: "alirio1925@gmail.com",
   linkedin: "https://www.linkedin.com/in/alirio-gutierrez-41a4a4197/",
   github: GITHUB_PROFILE_URL,

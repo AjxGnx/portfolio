@@ -58,13 +58,13 @@ type Props = {
 export default function HomeClient({ siteConfig, topSkills }: Props) {
   return (
     <div className="dot-pattern">
-      <section className="relative min-h-[calc(100vh-4rem)] flex items-center">
+      <section className="relative pt-10 pb-10 sm:py-20 lg:py-24">
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute top-1/4 -left-32 w-72 h-72 bg-accent/20 rounded-full blur-[120px]" />
           <div className="absolute bottom-1/4 -right-32 w-72 h-72 bg-accent-secondary/20 rounded-full blur-[120px]" />
         </div>
 
-        <div className="relative mx-auto max-w-6xl px-4 sm:px-6 py-20">
+        <div className="relative mx-auto max-w-6xl px-4 sm:px-6 py-4 sm:py-10 lg:py-14">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Photo: above text on mobile (order-1), right column on desktop (order-2) */}
             <div className="flex justify-center items-center order-1 lg:order-2 animate-fade-in-up-2">
@@ -84,26 +84,21 @@ export default function HomeClient({ siteConfig, topSkills }: Props) {
 
             {/* Left column: text, buttons, and terminal (order-2 on mobile, order-1 on desktop) */}
             <div className="order-2 lg:order-1">
-              <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight leading-[1.1] mb-6 animate-fade-in-up">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-[1.1] mb-4 animate-fade-in-up">
                 Hey, I&apos;m{" "}
                 <span className="gradient-text">{siteConfig.name}</span>
               </h1>
 
               <p className="text-base sm:text-lg text-accent-secondary font-medium mb-4 animate-fade-in-up-1">
                 {siteConfig.shortTitle}
-              </p>
-
-              <p className="text-sm sm:text-base text-muted max-w-xl mb-3 animate-fade-in-up-2">
-                {siteConfig.name} — {siteConfig.shortTitle}. Based in{" "}
-                {siteConfig.location}.
-              </p>
-
-              <p className="text-sm sm:text-base text-muted max-w-xl mb-3 animate-fade-in-up-2">
-                {siteConfig.description}
+                <span className="text-muted font-normal">
+                  {" "}
+                  · {siteConfig.location}
+                </span>
               </p>
 
               <p className="text-sm sm:text-base text-muted max-w-xl mb-8 animate-fade-in-up-2">
-                {siteConfig.bio}
+                {siteConfig.description}
               </p>
 
               <div className="flex flex-wrap items-center gap-4 animate-fade-in-up-3">
@@ -179,6 +174,67 @@ export default function HomeClient({ siteConfig, topSkills }: Props) {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-4 sm:px-6 py-12 sm:py-16 border-t border-border/50">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 items-start">
+          {/* Bio text — left 3 cols */}
+          <AnimatedSection className="lg:col-span-3">
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-4">
+              About <span className="gradient-text">me</span>
+            </h2>
+            <p className="text-sm sm:text-base text-muted leading-relaxed">
+              {siteConfig.bio}
+            </p>
+            <Link
+              href="/about"
+              className="inline-flex items-center gap-2 mt-6 text-sm text-muted hover:text-accent transition-colors"
+            >
+              Full profile & experience
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </AnimatedSection>
+
+          {/* Stats — right 2 cols */}
+          <AnimatedSection className="lg:col-span-2" delay={0.15}>
+            <div className="grid grid-cols-2 gap-3">
+              {[
+                { value: "7+", label: "Years experience" },
+                { value: "3", label: "Companies" },
+                { value: "Go · Python · Node.js", label: "Core stack" },
+                { value: "Kafka · PostgreSQL · AWS", label: "Infrastructure" },
+              ].map((stat) => (
+                <div
+                  key={stat.label}
+                  className="glass rounded-2xl p-4 flex flex-col gap-1"
+                >
+                  <span className="text-base font-bold gradient-text leading-tight">
+                    {stat.value}
+                  </span>
+                  <span className="text-xs text-muted">{stat.label}</span>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-3 glass rounded-2xl p-4">
+              <p className="text-xs text-muted mb-2 font-medium uppercase tracking-wider">
+                Currently at
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {["Gipsyy", "Previously: Rappi", "Previously: Platzi"].map(
+                  (co) => (
+                    <span
+                      key={co}
+                      className="text-xs rounded-lg border border-border/50 bg-card px-2.5 py-1 text-muted"
+                    >
+                      {co}
+                    </span>
+                  )
+                )}
+              </div>
+            </div>
+          </AnimatedSection>
         </div>
       </section>
 

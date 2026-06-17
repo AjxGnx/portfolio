@@ -25,6 +25,9 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const siteConfig = await getSiteConfig();
+  const richDescription = [siteConfig.description, siteConfig.bio]
+    .filter(Boolean)
+    .join(" ");
 
   const personSchema = {
     "@context": "https://schema.org",
@@ -33,7 +36,7 @@ export default async function RootLayout({
     url: SITE_URL,
     image: `${SITE_URL}/hero.jpg`,
     jobTitle: siteConfig.shortTitle,
-    description: siteConfig.description,
+    description: richDescription,
     email: siteConfig.email,
     sameAs: [siteConfig.github, siteConfig.linkedin],
     knowsAbout: [
@@ -51,7 +54,7 @@ export default async function RootLayout({
     "@type": "WebSite",
     name: siteConfig.name,
     url: SITE_URL,
-    description: siteConfig.description,
+    description: richDescription,
     author: {
       "@type": "Person",
       name: siteConfig.name,
