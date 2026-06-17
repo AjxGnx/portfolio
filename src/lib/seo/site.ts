@@ -18,4 +18,5 @@ export const PUBLIC_ROUTES = [
   "/contact",
 ] as const;
 
-export const GOOGLE_SITE_VERIFICATION = "google001c73f4841889e3";
+export const GOOGLE_SITE_VERIFICATION =
+  "C4yMLGgtTFgIk0Mf-iVRGnU0i-aMVEy0gqXBIhBr1M8";
