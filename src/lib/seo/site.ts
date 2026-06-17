@@ -17,3 +17,5 @@ export const PUBLIC_ROUTES = [
   "/gaming",
   "/contact",
 ] as const;
+
+export const GOOGLE_SITE_VERIFICATION = "google001c73f4841889e3";

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import {
   DEFAULT_DESCRIPTION,
   DEFAULT_TITLE,
+  GOOGLE_SITE_VERIFICATION,
   SITE_NAME,
   SITE_URL,
 } from "@/lib/seo/site";
@@ -80,5 +81,8 @@ export const rootMetadata: Metadata = {
   icons: {
     icon: "/profile-v2.jpg",
     apple: "/profile-v2.jpg",
+  },
+  verification: {
+    google: GOOGLE_SITE_VERIFICATION,
   },
 };
