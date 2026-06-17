@@ -85,17 +85,11 @@ export default function HomeClient({ siteConfig, topSkills }: Props) {
             {/* Left column: text, buttons, and terminal (order-2 on mobile, order-1 on desktop) */}
             <div className="order-2 lg:order-1">
               <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight leading-[1.1] mb-6 animate-fade-in-up">
-                Hey, I&apos;m{" "}
                 <span className="gradient-text">{siteConfig.name}</span>
               </h1>
 
               <p className="text-base sm:text-lg text-accent-secondary font-medium mb-4 animate-fade-in-up-1">
                 {siteConfig.shortTitle}
-              </p>
-
-              <p className="text-sm sm:text-base text-muted max-w-xl mb-3 animate-fade-in-up-2">
-                {siteConfig.name} — {siteConfig.shortTitle}. Based in{" "}
-                {siteConfig.location}.
               </p>
 
               <p className="text-sm sm:text-base text-muted max-w-xl mb-3 animate-fade-in-up-2">
