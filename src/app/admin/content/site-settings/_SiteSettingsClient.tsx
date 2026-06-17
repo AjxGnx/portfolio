@@ -105,15 +105,15 @@ export function SiteSettingsClient({ settings }: { settings: Settings }) {
         placeholder: "Full Stack Developer",
       })}
       {textField("short_title", "Short title", { placeholder: "Developer" })}
-      {textField("description", "Description (meta)", {
+      {textField("description", "Short intro (hero + meta)", {
         textarea: true,
         rows: 2,
-        placeholder: "Description for SEO and social media",
+        placeholder: "Brief intro shown on the home hero and in meta tags",
       })}
-      {textField("bio", "Bio", {
+      {textField("bio", "Bio (about page + home section)", {
         textarea: true,
         rows: 4,
-        placeholder: "Introduction paragraph shown on the portfolio",
+        placeholder: "Longer bio shown on About and below the home hero",
       })}
       {textField("email", "Contact email")}
 

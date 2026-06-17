@@ -58,7 +58,7 @@ type Props = {
 export default function HomeClient({ siteConfig, topSkills }: Props) {
   return (
     <div className="dot-pattern">
-      <section className="relative min-h-[calc(100vh-4rem)] flex items-center">
+      <section className="relative py-16 sm:py-20 lg:py-24">
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute top-1/4 -left-32 w-72 h-72 bg-accent/20 rounded-full blur-[120px]" />
           <div className="absolute bottom-1/4 -right-32 w-72 h-72 bg-accent-secondary/20 rounded-full blur-[120px]" />
@@ -84,20 +84,21 @@ export default function HomeClient({ siteConfig, topSkills }: Props) {
 
             {/* Left column: text, buttons, and terminal (order-2 on mobile, order-1 on desktop) */}
             <div className="order-2 lg:order-1">
-              <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight leading-[1.1] mb-6 animate-fade-in-up">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-[1.1] mb-4 animate-fade-in-up">
+                Hey, I&apos;m{" "}
                 <span className="gradient-text">{siteConfig.name}</span>
               </h1>
 
               <p className="text-base sm:text-lg text-accent-secondary font-medium mb-4 animate-fade-in-up-1">
                 {siteConfig.shortTitle}
-              </p>
-
-              <p className="text-sm sm:text-base text-muted max-w-xl mb-3 animate-fade-in-up-2">
-                {siteConfig.description}
+                <span className="text-muted font-normal">
+                  {" "}
+                  · {siteConfig.location}
+                </span>
               </p>
 
               <p className="text-sm sm:text-base text-muted max-w-xl mb-8 animate-fade-in-up-2">
-                {siteConfig.bio}
+                {siteConfig.description}
               </p>
 
               <div className="flex flex-wrap items-center gap-4 animate-fade-in-up-3">
@@ -174,6 +175,24 @@ export default function HomeClient({ siteConfig, topSkills }: Props) {
             </div>
           </div>
         </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-4 sm:px-6 py-12 sm:py-16 border-t border-border/50">
+        <AnimatedSection>
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-4">
+            About <span className="gradient-text">me</span>
+          </h2>
+          <p className="text-sm sm:text-base text-muted max-w-3xl leading-relaxed">
+            {siteConfig.bio}
+          </p>
+          <Link
+            href="/about"
+            className="inline-flex items-center gap-2 mt-6 text-sm text-muted hover:text-accent transition-colors"
+          >
+            Full profile & experience
+            <ArrowRight className="h-4 w-4" />
+          </Link>
+        </AnimatedSection>
       </section>
 
       <section className="mx-auto max-w-6xl px-4 sm:px-6 py-20">

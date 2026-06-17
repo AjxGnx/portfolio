@@ -6,8 +6,8 @@ export const siteConfig = {
   title: "Golang Developer | Python | NodeJS | Senior Backend Developer | Engineering Lead",
   shortTitle: "Tech Lead & Senior Backend Developer",
   description:
-    "I'm Alirio Gutierrez, a Tech Lead and Senior Backend Developer based in Bogotá, Colombia. I design and build scalable backend systems with Go, Python, and Node.js — from event-driven microservices and APIs to data pipelines that support products at scale. Passionate about solving complex problems through clean architecture and teamwork, I help engineering teams ship maintainable services with strong testing practices and clear technical ownership.",
-  bio: "This portfolio highlights selected projects, professional experience at companies such as Gipsyy, Rappi, and Platzi, and the technologies I rely on most as a backend developer. My commitment to continuous learning drives me to grow with every challenge and contribute to the success of the teams and products I work on. Outside of code, you'll find me reading a good book or exploring worlds in video games. Browse the sections below for microservices work, career highlights, skills, and reading notes.",
+    "I build scalable backends with Go, Python, and Node.js — microservices, APIs, and data pipelines for products at scale.",
+  bio: "Passionate about clean architecture and teamwork, I help engineering teams ship maintainable services with strong testing practices and clear technical ownership. This portfolio highlights selected projects and professional experience at companies such as Gipsyy, Rappi, and Platzi — building transportation, education, and marketplace platforms at scale. My commitment to continuous learning drives me to grow with every challenge. Outside of code, you'll find me reading a good book or exploring worlds in video games.",
   email: "alirio1925@gmail.com",
   linkedin: "https://www.linkedin.com/in/alirio-gutierrez-41a4a4197/",
   github: GITHUB_PROFILE_URL,
