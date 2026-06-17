@@ -222,7 +222,7 @@ export const books = [
     id: 7,
     title: "Atomic Habits",
     author: "James Clear",
-    cover: "/books/atomic.jpg",
+    cover: "/books/atomic-habits.jpg",
     rating: 4,
     status: "Read" as const,
     review:

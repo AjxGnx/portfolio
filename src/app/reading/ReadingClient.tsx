@@ -66,24 +66,27 @@ export default function ReadingClient({ books }: Props) {
 
                 {/* Cover — portrait, clean, no overlays */}
                 <div className="relative aspect-[2/3] bg-black">
+                  {/* Fallback icon — always present, covered by image when loaded */}
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <BookOpen className="h-12 w-12 text-white/20" />
+                  </div>
+
                   {book.cover && (
-                    <img
-                      src={book.cover}
-                      alt=""
-                      aria-hidden
-                      className="absolute inset-0 w-full h-full object-cover scale-110 blur-2xl opacity-40"
-                    />
-                  )}
-                  {book.cover ? (
-                    <img
-                      src={book.cover}
-                      alt={book.title}
-                      className="absolute inset-0 w-full h-full object-contain z-10"
-                    />
-                  ) : (
-                    <div className="absolute inset-0 flex items-center justify-center z-10">
-                      <BookOpen className="h-12 w-12 text-white/20" />
-                    </div>
+                    <>
+                      {/* Blur layer via CSS background-image — single network fetch */}
+                      <div
+                        aria-hidden
+                        className="absolute inset-0 scale-110 blur-2xl opacity-40"
+                        style={{ backgroundImage: `url(${book.cover})`, backgroundSize: "cover", backgroundPosition: "center" }}
+                      />
+                      {/* Main cover — hides on error, revealing fallback icon */}
+                      <img
+                        src={book.cover}
+                        alt={book.title}
+                        className="absolute inset-0 w-full h-full object-contain z-10"
+                        onError={(e) => { e.currentTarget.style.display = "none"; }}
+                      />
+                    </>
                   )}
                 </div>
 
