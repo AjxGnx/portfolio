@@ -3,22 +3,19 @@
 import { useState } from "react";
 import { BookOpen, Star, BookMarked, Clock } from "lucide-react";
 import AnimatedSection from "@/components/AnimatedSection";
-import Card, { CardContent } from "@/components/Card";
-import CategoryLabel from "@/components/CategoryLabel";
 import FilterBar from "@/components/FilterBar";
 import PageContainer from "@/components/PageContainer";
 import SectionHeader from "@/components/SectionHeader";
 import StatGrid from "@/components/StatGrid";
-import StatusBadge from "@/components/StatusBadge";
 import type { Book } from "@/lib/types/portfolio";
 import type { BookStatus } from "@/lib/supabase/database.types";
 
 type Filter = "all" | BookStatus;
 
 const statusConfig = {
-  Read: { icon: BookMarked, colorClass: "text-emerald-400", bgClass: "bg-emerald-400/10", borderClass: "border-emerald-400/30" },
-  Reading: { icon: BookOpen, colorClass: "text-amber-400", bgClass: "bg-amber-400/10", borderClass: "border-amber-400/30" },
-  "To Read": { icon: Clock, colorClass: "text-blue-400", bgClass: "bg-blue-400/10", borderClass: "border-blue-400/30" },
+  Read:      { icon: BookMarked, colorClass: "text-emerald-400", label: "Read" },
+  Reading:   { icon: BookOpen,   colorClass: "text-amber-400",   label: "Reading" },
+  "To Read": { icon: Clock,      colorClass: "text-blue-400",    label: "To Read" },
 };
 
 const filterOptions = [
@@ -38,16 +35,10 @@ export default function ReadingClient({ books }: Props) {
   const filtered =
     filter === "all" ? books : books.filter((b) => b.status === filter);
 
-  const categories = [...new Set(books.map((b) => b.category))];
-
   const stats = [
-    {
-      value: books.filter((b) => b.status === "Read").length,
-      label: "Read",
-      colorClass: "gradient-text",
-    },
-    { value: books.filter((b) => b.status === "Reading").length, label: "Reading", colorClass: "text-amber-400" },
-    { value: books.filter((b) => b.status === "To Read").length, label: "To Read", colorClass: "text-blue-400" },
+    { value: books.filter((b) => b.status === "Read").length,     label: "Read",    colorClass: "text-emerald-400" },
+    { value: books.filter((b) => b.status === "Reading").length,  label: "Reading", colorClass: "text-amber-400" },
+    { value: books.filter((b) => b.status === "To Read").length,  label: "To Read", colorClass: "text-blue-400" },
   ];
 
   return (
@@ -65,72 +56,65 @@ export default function ReadingClient({ books }: Props) {
         onChange={(v) => setFilter(v as Filter)}
       />
 
-      <div>
-        {categories.map((category) => {
-          const categoryBooks = filtered.filter((b) => b.category === category);
-          if (categoryBooks.length === 0) return null;
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+        {filtered.map((book, i) => {
+          const status = statusConfig[book.status];
 
           return (
-            <div key={category} className="mb-10">
-              <AnimatedSection>
-                <CategoryLabel label={category} />
-              </AnimatedSection>
+            <AnimatedSection key={book.id} delay={i * 0.04}>
+              <div className="flex flex-col rounded-xl overflow-hidden border border-white/5 hover:border-white/15 transition-all duration-300 hover:scale-[1.03] hover:shadow-2xl hover:shadow-black/70">
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {categoryBooks.map((book, i) => {
-                  const status = statusConfig[book.status];
+                {/* Cover — portrait, clean, no overlays */}
+                <div className="relative aspect-[2/3] bg-black">
+                  {/* Fallback icon — always present, covered by image when loaded */}
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <BookOpen className="h-12 w-12 text-white/20" />
+                  </div>
 
-                  return (
-                    <AnimatedSection key={book.id} delay={i * 0.08}>
-                      <Card
-                        media={
-                          <div className="h-36 bg-gradient-to-br from-accent/10 to-accent-secondary/10 flex items-center justify-center">
-                            <BookOpen className="h-10 w-10 text-accent/30" />
-                          </div>
-                        }
-                      >
-                        <CardContent>
-                          <div className="flex items-start justify-between gap-2 mb-1">
-                            <h4 className="font-bold text-foreground text-sm leading-tight">
-                              {book.title}
-                            </h4>
-                            <StatusBadge
-                              icon={status.icon}
-                              label={book.status}
-                              colorClass={status.colorClass}
-                              bgClass={status.bgClass}
-                              borderClass={status.borderClass}
-                              className="shrink-0"
-                            />
-                          </div>
+                  {book.cover && (
+                    <>
+                      {/* Blur layer via CSS background-image — single network fetch */}
+                      <div
+                        aria-hidden
+                        className="absolute inset-0 scale-110 blur-2xl opacity-40"
+                        style={{ backgroundImage: `url(${book.cover})`, backgroundSize: "cover", backgroundPosition: "center" }}
+                      />
+                      {/* Main cover — hides on error, revealing fallback icon */}
+                      <img
+                        src={book.cover}
+                        alt={book.title}
+                        className="absolute inset-0 w-full h-full object-contain z-10"
+                        onError={(e) => { e.currentTarget.style.display = "none"; }}
+                      />
+                    </>
+                  )}
+                </div>
 
-                          <p className="text-xs text-muted mb-3">{book.author}</p>
+                {/* Footer strip — outside the image */}
+                <div className="flex items-center justify-between gap-2 px-3 py-2.5 bg-card border-t border-white/5">
+                  <div className="flex items-center gap-0.5">
+                    {Array.from({ length: 5 }).map((_, idx) => (
+                      <Star
+                        key={idx}
+                        className={`h-3.5 w-3.5 ${
+                          idx < book.rating
+                            ? "text-amber-400 fill-amber-400"
+                            : "text-white/10"
+                        }`}
+                      />
+                    ))}
+                  </div>
 
-                          <div className="flex items-center gap-0.5 mb-3">
-                            {Array.from({ length: 5 }).map((_, idx) => (
-                              <Star
-                                key={idx}
-                                className={`h-3.5 w-3.5 ${
-                                  idx < book.rating
-                                    ? "text-amber-400 fill-amber-400"
-                                    : "text-border"
-                                }`}
-                              />
-                            ))}
-                          </div>
+                  {filter === "all" && (
+                    <span className={`inline-flex items-center gap-1 text-[10px] font-semibold ${status.colorClass}`}>
+                      <status.icon className="h-3 w-3" />
+                      {status.label}
+                    </span>
+                  )}
+                </div>
 
-                          {book.review && (
-                            <p className="text-xs text-muted leading-relaxed flex-1">
-                              &ldquo;{book.review}&rdquo;
-                            </p>
-                          )}
-                        </CardContent>
-                      </Card>
-                    </AnimatedSection>
-                  );
-                })}
               </div>
-            </div>
+            </AnimatedSection>
           );
         })}
       </div>
