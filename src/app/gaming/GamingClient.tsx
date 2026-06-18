@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Gamepad2, Trophy, Play, Clock } from "lucide-react";
+import { Gamepad2 } from "lucide-react";
 import AnimatedSection from "@/components/AnimatedSection";
 import FilterBar from "@/components/FilterBar";
 import PageContainer from "@/components/PageContainer";
@@ -12,28 +12,16 @@ import type { GameStatus } from "@/lib/supabase/database.types";
 
 type Filter = "all" | GameStatus;
 
-const statusConfig: Record<
-  GameStatus,
-  { icon: React.ElementType; colorClass: string; dot: string; label: string }
-> = {
-  Completed: {
-    icon: Trophy,
-    colorClass: "text-emerald-400",
-    dot: "bg-emerald-400",
-    label: "Completed",
-  },
-  Playing: {
-    icon: Play,
-    colorClass: "text-amber-400",
-    dot: "bg-amber-400",
-    label: "Playing",
-  },
-  Backlog: {
-    icon: Clock,
-    colorClass: "text-blue-400",
-    dot: "bg-blue-400",
-    label: "Backlog",
-  },
+const gameFallback = (
+  <div className="absolute inset-0 flex items-center justify-center">
+    <Gamepad2 className="h-10 w-10 text-muted/30" />
+  </div>
+);
+
+const statusConfig: Record<GameStatus, { colorClass: string; dot: string; label: string }> = {
+  Completed: { colorClass: "text-emerald-400", dot: "bg-emerald-400", label: "Completed" },
+  Playing:   { colorClass: "text-amber-400",   dot: "bg-amber-400",   label: "Playing" },
+  Backlog:   { colorClass: "text-blue-400",    dot: "bg-blue-400",    label: "Backlog" },
 };
 
 const filterOptions = [
@@ -53,22 +41,16 @@ export default function GamingClient({ games }: Props) {
   const filtered =
     filter === "all" ? games : games.filter((g) => g.status === filter);
 
+  let completed = 0, playing = 0, backlog = 0;
+  for (const g of games) {
+    if (g.status === "Completed") completed++;
+    else if (g.status === "Playing") playing++;
+    else backlog++;
+  }
   const stats = [
-    {
-      value: games.filter((g) => g.status === "Completed").length,
-      label: "Completed",
-      colorClass: "gradient-text",
-    },
-    {
-      value: games.filter((g) => g.status === "Playing").length,
-      label: "Playing",
-      colorClass: "text-amber-400",
-    },
-    {
-      value: games.filter((g) => g.status === "Backlog").length,
-      label: "Backlog",
-      colorClass: "text-blue-400",
-    },
+    { value: completed, label: "Completed", colorClass: "gradient-text" },
+    { value: playing,   label: "Playing",   colorClass: "text-amber-400" },
+    { value: backlog,   label: "Backlog",   colorClass: "text-blue-400" },
   ];
 
   return (
@@ -100,10 +82,7 @@ export default function GamingClient({ games }: Props) {
                     className="absolute inset-0 scale-110 blur-2xl opacity-60"
                     style={{ backgroundImage: `url(${game.image})`, backgroundSize: "cover", backgroundPosition: "center" }}
                   />
-                  {/* Fallback icon */}
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <Gamepad2 className="h-10 w-10 text-muted/30" />
-                  </div>
+                  {gameFallback}
                   {/* Main cover */}
                   <img
                     src={game.image}

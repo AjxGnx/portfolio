@@ -12,6 +12,12 @@ import type { BookStatus } from "@/lib/supabase/database.types";
 
 type Filter = "all" | BookStatus;
 
+const bookFallback = (
+  <div className="absolute inset-0 flex items-center justify-center">
+    <BookOpen className="h-12 w-12 text-white/20" />
+  </div>
+);
+
 const statusConfig: Record<BookStatus, { colorClass: string; dot: string; label: string }> = {
   Read:      { colorClass: "text-emerald-400", dot: "bg-emerald-400", label: "Read" },
   Reading:   { colorClass: "text-amber-400",   dot: "bg-amber-400",   label: "Reading" },
@@ -35,10 +41,16 @@ export default function ReadingClient({ books }: Props) {
   const filtered =
     filter === "all" ? books : books.filter((b) => b.status === filter);
 
+  let read = 0, reading = 0, toRead = 0;
+  for (const b of books) {
+    if (b.status === "Read") read++;
+    else if (b.status === "Reading") reading++;
+    else toRead++;
+  }
   const stats = [
-    { value: books.filter((b) => b.status === "Read").length,     label: "Read",    colorClass: "text-emerald-400" },
-    { value: books.filter((b) => b.status === "Reading").length,  label: "Reading", colorClass: "text-amber-400" },
-    { value: books.filter((b) => b.status === "To Read").length,  label: "To Read", colorClass: "text-blue-400" },
+    { value: read,    label: "Read",    colorClass: "text-emerald-400" },
+    { value: reading, label: "Reading", colorClass: "text-amber-400" },
+    { value: toRead,  label: "To Read", colorClass: "text-blue-400" },
   ];
 
   return (
@@ -66,10 +78,7 @@ export default function ReadingClient({ books }: Props) {
 
                 {/* Cover — portrait, clean, no overlays */}
                 <div className="relative aspect-[2/3] overflow-hidden bg-black">
-                  {/* Fallback icon */}
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <BookOpen className="h-12 w-12 text-white/20" />
-                  </div>
+                  {bookFallback}
 
                   {book.cover && (
                     <>
