@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { BookOpen, Star, BookMarked, Clock } from "lucide-react";
+import { BookOpen } from "lucide-react";
 import AnimatedSection from "@/components/AnimatedSection";
 import FilterBar from "@/components/FilterBar";
 import PageContainer from "@/components/PageContainer";
@@ -12,10 +12,10 @@ import type { BookStatus } from "@/lib/supabase/database.types";
 
 type Filter = "all" | BookStatus;
 
-const statusConfig = {
-  Read:      { icon: BookMarked, colorClass: "text-emerald-400", label: "Read" },
-  Reading:   { icon: BookOpen,   colorClass: "text-amber-400",   label: "Reading" },
-  "To Read": { icon: Clock,      colorClass: "text-blue-400",    label: "To Read" },
+const statusConfig: Record<BookStatus, { colorClass: string; dot: string; label: string }> = {
+  Read:      { colorClass: "text-emerald-400", dot: "bg-emerald-400", label: "Read" },
+  Reading:   { colorClass: "text-amber-400",   dot: "bg-amber-400",   label: "Reading" },
+  "To Read": { colorClass: "text-blue-400",    dot: "bg-blue-400",    label: "To Read" },
 };
 
 const filterOptions = [
@@ -62,11 +62,11 @@ export default function ReadingClient({ books }: Props) {
 
           return (
             <AnimatedSection key={book.id} delay={i * 0.04}>
-              <div className="flex flex-col rounded-xl overflow-hidden border border-white/5 hover:border-white/15 transition-all duration-300 hover:scale-[1.03] hover:shadow-2xl hover:shadow-black/70">
+              <div className="group rounded-xl overflow-hidden border border-white/5 hover:border-white/15 transition-all duration-300 hover:shadow-lg hover:shadow-black/20 flex flex-col">
 
                 {/* Cover — portrait, clean, no overlays */}
-                <div className="relative aspect-[2/3] bg-black">
-                  {/* Fallback icon — always present, covered by image when loaded */}
+                <div className="relative aspect-[2/3] overflow-hidden bg-black">
+                  {/* Fallback icon */}
                   <div className="absolute inset-0 flex items-center justify-center">
                     <BookOpen className="h-12 w-12 text-white/20" />
                   </div>
@@ -79,35 +79,28 @@ export default function ReadingClient({ books }: Props) {
                         className="absolute inset-0 scale-110 blur-2xl opacity-40"
                         style={{ backgroundImage: `url(${book.cover})`, backgroundSize: "cover", backgroundPosition: "center" }}
                       />
-                      {/* Main cover — hides on error, revealing fallback icon */}
+                      {/* Main cover — zoom on hover */}
                       <img
                         src={book.cover}
                         alt={book.title}
-                        className="absolute inset-0 w-full h-full object-contain z-10"
+                        className="absolute inset-0 w-full h-full object-contain z-10 transition-transform duration-500 group-hover:scale-105"
                         onError={(e) => { e.currentTarget.style.display = "none"; }}
                       />
                     </>
                   )}
                 </div>
 
-                {/* Footer strip — outside the image */}
-                <div className="flex items-center justify-between gap-2 px-3 py-2.5 bg-card border-t border-white/5">
-                  <div className="flex items-center gap-0.5">
-                    {Array.from({ length: 5 }).map((_, idx) => (
-                      <Star
-                        key={idx}
-                        className={`h-3.5 w-3.5 ${
-                          idx < book.rating
-                            ? "text-amber-400 fill-amber-400"
-                            : "text-white/10"
-                        }`}
-                      />
-                    ))}
-                  </div>
+                {/* Footer strip */}
+                <div className="flex items-center justify-between gap-2 px-3 py-2 bg-card border-t border-white/5">
+                  <span className="inline-flex items-center gap-1 text-xs font-bold text-amber-400">
+                    <span className="text-amber-400/70 font-normal">★</span>
+                    {book.rating > 0 ? book.rating : "—"}
+                    <span className="text-muted font-normal">/5</span>
+                  </span>
 
                   {filter === "all" && (
-                    <span className={`inline-flex items-center gap-1 text-[10px] font-semibold ${status.colorClass}`}>
-                      <status.icon className="h-3 w-3" />
+                    <span className={`inline-flex items-center gap-1.5 text-xs font-medium ${status.colorClass}`}>
+                      <span className={`h-1.5 w-1.5 rounded-full ${status.dot}`} />
                       {status.label}
                     </span>
                   )}
