@@ -1,23 +1,27 @@
 "use client";
 
 import { useState } from "react";
-import { Gamepad2, Star, Trophy, Play, Clock } from "lucide-react";
+import { Gamepad2 } from "lucide-react";
 import AnimatedSection from "@/components/AnimatedSection";
-import Card, { CardContent } from "@/components/Card";
 import FilterBar from "@/components/FilterBar";
 import PageContainer from "@/components/PageContainer";
 import SectionHeader from "@/components/SectionHeader";
 import StatGrid from "@/components/StatGrid";
-import StatusBadge from "@/components/StatusBadge";
 import type { Game } from "@/lib/types/portfolio";
 import type { GameStatus } from "@/lib/supabase/database.types";
 
 type Filter = "all" | GameStatus;
 
-const statusConfig = {
-  Completed: { icon: Trophy, colorClass: "text-emerald-400", bgClass: "bg-emerald-400/10", borderClass: "border-emerald-400/30" },
-  Playing: { icon: Play, colorClass: "text-amber-400", bgClass: "bg-amber-400/10", borderClass: "border-amber-400/30" },
-  Backlog: { icon: Clock, colorClass: "text-blue-400", bgClass: "bg-blue-400/10", borderClass: "border-blue-400/30" },
+const gameFallback = (
+  <div className="absolute inset-0 flex items-center justify-center">
+    <Gamepad2 className="h-10 w-10 text-muted/30" />
+  </div>
+);
+
+const statusConfig: Record<GameStatus, { colorClass: string; dot: string; label: string }> = {
+  Completed: { colorClass: "text-emerald-400", dot: "bg-emerald-400", label: "Completed" },
+  Playing:   { colorClass: "text-amber-400",   dot: "bg-amber-400",   label: "Playing" },
+  Backlog:   { colorClass: "text-blue-400",    dot: "bg-blue-400",    label: "Backlog" },
 };
 
 const filterOptions = [
@@ -37,14 +41,16 @@ export default function GamingClient({ games }: Props) {
   const filtered =
     filter === "all" ? games : games.filter((g) => g.status === filter);
 
+  let completed = 0, playing = 0, backlog = 0;
+  for (const g of games) {
+    if (g.status === "Completed") completed++;
+    else if (g.status === "Playing") playing++;
+    else backlog++;
+  }
   const stats = [
-    {
-      value: games.filter((g) => g.status === "Completed").length,
-      label: "Completed",
-      colorClass: "gradient-text",
-    },
-    { value: games.filter((g) => g.status === "Playing").length, label: "Playing", colorClass: "text-amber-400" },
-    { value: games.filter((g) => g.status === "Backlog").length, label: "Backlog", colorClass: "text-blue-400" },
+    { value: completed, label: "Completed", colorClass: "gradient-text" },
+    { value: playing,   label: "Playing",   colorClass: "text-amber-400" },
+    { value: backlog,   label: "Backlog",   colorClass: "text-blue-400" },
   ];
 
   return (
@@ -62,51 +68,52 @@ export default function GamingClient({ games }: Props) {
         onChange={(v) => setFilter(v as Filter)}
       />
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
         {filtered.map((game, i) => {
           const status = statusConfig[game.status];
 
           return (
-            <AnimatedSection key={game.id} delay={i * 0.08}>
-              <Card
-                media={
-                  <div className="relative h-44 bg-gradient-to-br from-emerald-500/10 to-cyan-500/10 overflow-hidden flex items-center justify-center">
-                    <Gamepad2 className="h-12 w-12 text-emerald-400/30" />
-                    <div className="absolute top-3 left-3">
-                      <StatusBadge
-                        icon={status.icon}
-                        label={game.status}
-                        colorClass={status.colorClass}
-                        bgClass={status.bgClass}
-                        borderClass={status.borderClass}
-                      />
-                    </div>
-                    {game.rating > 0 && (
-                      <div className="absolute top-3 right-3">
-                        <span className="inline-flex items-center gap-1 rounded-full bg-background/80 backdrop-blur-sm px-2 py-0.5 text-xs font-bold text-amber-400">
-                          <Star className="h-3 w-3 fill-amber-400" />
-                          {game.rating}
-                        </span>
-                      </div>
-                    )}
-                  </div>
-                }
-              >
-                <CardContent>
-                  <h3 className="font-bold text-foreground mb-1">{game.title}</h3>
-                  <div className="flex items-center gap-2 text-xs text-muted mb-1">
-                    <span>{game.platform}</span>
-                    <span className="text-border">•</span>
-                    <span>{game.genre}</span>
-                  </div>
+            <AnimatedSection key={game.id} delay={i * 0.06}>
+              <div className="group rounded-xl overflow-hidden border border-border/50 bg-card hover:border-border transition-all duration-300 hover:shadow-lg hover:shadow-black/20 flex flex-col">
+                {/* Cover image */}
+                <div className="relative aspect-[3/4] overflow-hidden bg-card">
+                  {/* Blurred background layer */}
+                  <div
+                    className="absolute inset-0 scale-110 blur-2xl opacity-60"
+                    style={{ backgroundImage: `url(${game.image})`, backgroundSize: "cover", backgroundPosition: "center" }}
+                  />
+                  {gameFallback}
+                  {/* Main cover */}
+                  <img
+                    src={game.image}
+                    alt={game.title}
+                    className="relative w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    onError={(e) => {
+                      (e.currentTarget as HTMLImageElement).style.display = "none";
+                    }}
+                  />
+                </div>
 
-                  {game.review && (
-                    <p className="text-xs text-muted leading-relaxed mt-3 flex-1">
-                      &ldquo;{game.review}&rdquo;
-                    </p>
+                {/* Footer */}
+                <div className="flex items-center justify-between px-3 py-2 bg-card border-t border-border/40">
+                  {/* Rating badge */}
+                  <span className="inline-flex items-center gap-1 text-xs font-bold text-amber-400">
+                    <span className="text-amber-400/70 font-normal">★</span>
+                    {game.rating > 0 ? game.rating : "—"}
+                    <span className="text-muted font-normal">/10</span>
+                  </span>
+
+                  {/* Status — hidden when filtering by that status */}
+                  {filter === "all" && (
+                    <span
+                      className={`inline-flex items-center gap-1.5 text-xs font-medium ${status.colorClass}`}
+                    >
+                      <span className={`h-1.5 w-1.5 rounded-full ${status.dot}`} />
+                      {status.label}
+                    </span>
                   )}
-                </CardContent>
-              </Card>
+                </div>
+              </div>
             </AnimatedSection>
           );
         })}
