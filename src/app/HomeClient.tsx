@@ -285,11 +285,10 @@ export default function HomeClient({ siteConfig, topSkills }: Props) {
           <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-3">
             Tech <span className="gradient-text">Stack</span>
           </h2>
-          <p className="text-sm text-muted max-w-2xl">
-            A selection of the technologies I rely on most — the tools behind
-            the distributed systems, APIs, and data pipelines I build every
-            day, including{" "}
-            {topSkills.map((skill) => skill.name).join(", ")}.
+          <p className="text-sm text-muted">
+            The tools behind the distributed systems, APIs, and data pipelines
+            I build every day. Each skill reflects hands-on production
+            experience across real-world engineering teams.
           </p>
         </AnimatedSection>
 
