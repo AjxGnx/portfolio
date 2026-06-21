@@ -10,4 +10,5 @@ export function revalidatePortfolioContent() {
   revalidatePath("/projects");
   revalidatePath("/reading");
   revalidatePath("/gaming");
+  revalidatePath("/llms.txt");
 }

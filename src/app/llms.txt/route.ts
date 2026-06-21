@@ -1,5 +1,7 @@
-import { getSiteConfig } from "@/lib/data/portfolio";
+import { getSiteConfig, getSkills } from "@/lib/data/portfolio";
 import { PUBLIC_ROUTES, SITE_URL } from "@/lib/seo/site";
+
+export const revalidate = 86400;
 
 const PAGE_DESCRIPTIONS: Record<string, string> = {
   "/": "Home page with hero, about section, tech stack, and highlights",
@@ -11,7 +13,12 @@ const PAGE_DESCRIPTIONS: Record<string, string> = {
 };
 
 export async function GET() {
-  const siteConfig = await getSiteConfig();
+  const [siteConfig, skills] = await Promise.all([
+    getSiteConfig(),
+    getSkills(),
+  ]);
+
+  const stackList = skills.map((s) => s.name).join(", ");
 
   const pages = PUBLIC_ROUTES.map((path) => {
     const url = path === "/" ? SITE_URL : `${SITE_URL}${path}`;
@@ -30,7 +37,7 @@ ${siteConfig.bio}
 - Location: ${siteConfig.location}
 - GitHub: ${siteConfig.github}
 - LinkedIn: ${siteConfig.linkedin}
-- Stack: Go, Python, Node.js, Microservices, Apache Kafka, PostgreSQL, MongoDB, Docker, AWS
+- Stack: ${stackList}
 
 ## Pages
 
