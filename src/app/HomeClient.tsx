@@ -19,7 +19,8 @@ const highlights = [
   {
     icon: Code2,
     title: "Projects",
-    description: "Microservices, APIs and backend solutions with Go, Python & Node.js",
+    description:
+      "Production-grade microservices, REST APIs, and backend services built with Go, Python & Node.js.",
     href: "/projects",
     color: "text-violet-400",
     bg: "bg-violet-400/10",
@@ -27,7 +28,8 @@ const highlights = [
   {
     icon: BookOpen,
     title: "Reading",
-    description: "Dev books, good reads, and more",
+    description:
+      "Technical reads, dev books, and good stories to fuel continuous learning and growth.",
     href: "/reading",
     color: "text-cyan-400",
     bg: "bg-cyan-400/10",
@@ -35,7 +37,8 @@ const highlights = [
   {
     icon: Gamepad2,
     title: "Gaming",
-    description: "RPGs, metroidvanias & epic adventures",
+    description:
+      "Exploring RPGs, metroidvanias, and open-world games across console and PC.",
     href: "/gaming",
     color: "text-emerald-400",
     bg: "bg-emerald-400/10",
@@ -43,7 +46,8 @@ const highlights = [
   {
     icon: Briefcase,
     title: "Experience",
-    description: "+7 years at Rappi, Platzi, Gipsyy & more",
+    description:
+      "Over 7 years of professional software engineering experience at Rappi, Platzi, Gipsyy, and other companies.",
     href: "/about",
     color: "text-amber-400",
     bg: "bg-amber-400/10",
@@ -240,9 +244,13 @@ export default function HomeClient({ siteConfig, topSkills }: Props) {
 
       <section className="mx-auto max-w-6xl px-4 sm:px-6 py-20">
         <AnimatedSection className="mb-12">
-          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-3">
             Explore my <span className="gradient-text">world</span>
           </h2>
+          <p className="text-sm text-muted max-w-2xl">
+            Projects, reading notes, gaming picks, and professional
+            experience — all in one place.
+          </p>
         </AnimatedSection>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -278,7 +286,9 @@ export default function HomeClient({ siteConfig, topSkills }: Props) {
             Tech <span className="gradient-text">Stack</span>
           </h2>
           <p className="text-sm text-muted max-w-2xl">
-            A selection of the technologies I work with most, including{" "}
+            A selection of the technologies I rely on most — the tools behind
+            the distributed systems, APIs, and data pipelines I build every
+            day, including{" "}
             {topSkills.map((skill) => skill.name).join(", ")}.
           </p>
         </AnimatedSection>
