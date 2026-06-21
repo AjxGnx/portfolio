@@ -7,7 +7,7 @@ export const DEFAULT_TITLE =
   "Alirio Gutierrez | Tech Lead & Senior Backend Developer";
 
 export const DEFAULT_DESCRIPTION =
-  "Tech Lead and Senior Backend Developer specializing in Go, Python, and Node.js. Building scalable microservices at Gipsyy, with experience at Rappi and Platzi.";
+  "Tech Lead & Senior Backend Developer. Go, Python, Node.js — scalable microservices at Gipsyy, Rappi, and Platzi.";
 
 export const PUBLIC_ROUTES = [
   "/",
