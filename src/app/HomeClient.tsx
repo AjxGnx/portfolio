@@ -287,8 +287,9 @@ export default function HomeClient({ siteConfig, topSkills }: Props) {
           </h2>
           <p className="text-sm text-muted">
             The tools behind the distributed systems, APIs, and data pipelines
-            I build every day. Each skill reflects hands-on production
-            experience across real-world engineering teams.
+            I build every day. Each technology reflects hands-on production
+            experience solving real engineering challenges at companies like
+            Gipsyy, Rappi, and Platzi.
           </p>
         </AnimatedSection>
 
