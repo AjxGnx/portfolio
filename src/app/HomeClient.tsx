@@ -186,7 +186,8 @@ export default function HomeClient({ siteConfig, topSkills }: Props) {
           {/* Bio text — left 3 cols */}
           <AnimatedSection className="lg:col-span-3">
             <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-4">
-              About <span className="gradient-text">me</span>
+              About{" "}
+              <span className="gradient-text">{siteConfig.name}</span>
             </h2>
             <p className="text-sm sm:text-base text-muted leading-relaxed">
               {siteConfig.bio}
