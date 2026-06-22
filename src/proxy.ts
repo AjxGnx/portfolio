@@ -31,22 +31,8 @@ function redirectWithSessionCookies(
   return redirect;
 }
 
-const NON_LOCALIZED_ROUTES = new Set([
-  "/robots.txt",
-  "/sitemap.xml",
-  "/llms.txt",
-]);
-
 export async function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
-
-  // Static/SEO routes that live outside [locale] — pass through untouched
-  if (
-    NON_LOCALIZED_ROUTES.has(pathname) ||
-    pathname.startsWith("/opengraph-image")
-  ) {
-    return NextResponse.next();
-  }
 
   const isAdminRoute =
     pathname.startsWith("/admin") && pathname !== "/admin/login";
@@ -113,6 +99,13 @@ export async function proxy(request: NextRequest) {
 
 export const config = {
   matcher: [
-    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+    /*
+     * Match all request paths EXCEPT:
+     * - _next/static, _next/image  (Next.js internals)
+     * - favicon.ico, opengraph-image (root-level assets)
+     * - Files with static extensions: svg, png, jpg, jpeg, gif, webp, ico, txt, xml
+     *   This covers: /robots.txt, /sitemap.xml, /llms.txt, /icon.svg, etc.
+     */
+    "/((?!_next/static|_next/image|favicon\\.ico|opengraph-image|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|txt|xml)$).*)",
   ],
 };
