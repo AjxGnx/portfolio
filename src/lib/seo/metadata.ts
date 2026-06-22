@@ -78,10 +78,6 @@ export const rootMetadata: Metadata = {
     title: DEFAULT_TITLE,
     description: DEFAULT_DESCRIPTION,
   },
-  icons: {
-    icon: "/profile-v2.jpg",
-    apple: "/profile-v2.jpg",
-  },
   verification: {
     google: GOOGLE_SITE_VERIFICATION,
   },
