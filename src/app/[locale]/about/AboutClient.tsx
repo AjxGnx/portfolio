@@ -93,7 +93,6 @@ export default function AboutClient({
               <span className="gradient-text">{t("whoAmI")}</span>
             </h3>
             <div className="space-y-4 text-muted text-sm leading-relaxed">
-              <p>{siteConfig.description}</p>
               <p>{siteConfig.bio}</p>
               <p>
                 {t.rich("careerParagraph", {

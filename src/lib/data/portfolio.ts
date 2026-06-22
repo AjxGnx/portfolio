@@ -72,7 +72,7 @@ export async function getSiteConfig(locale: Locale = "en"): Promise<SiteConfig> 
       : mapSiteConfig(data);
   }
 
-  return translateContent(config, ["description", "bio", "shortTitle"], locale);
+  return translateContent(config, ["description", "bio"], locale);
 }
 
 export async function getSkills(): Promise<Skill[]> {
