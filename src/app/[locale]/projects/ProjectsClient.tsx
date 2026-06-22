@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { ExternalLink, FolderGit2, Star } from "lucide-react";
 import AnimatedSection from "@/components/AnimatedSection";
 import Card, { CardContent, CardFooter } from "@/components/Card";
@@ -13,17 +14,18 @@ import type { PortfolioProject } from "@/lib/types/portfolio";
 
 type Filter = "all" | "featured";
 
-const filterOptions = [
-  { value: "all", label: "All" },
-  { value: "featured", label: "Featured" },
-];
-
 type Props = {
   projects: PortfolioProject[];
 };
 
 export default function ProjectsClient({ projects }: Props) {
+  const t = useTranslations("Projects");
   const [filter, setFilter] = useState<Filter>("all");
+
+  const filterOptions = [
+    { value: "all", label: t("filterAll") },
+    { value: "featured", label: t("filterFeatured") },
+  ];
 
   const filtered =
     filter === "featured" ? projects.filter((p) => p.featured) : projects;
@@ -31,8 +33,8 @@ export default function ProjectsClient({ projects }: Props) {
   return (
     <PageContainer>
       <SectionHeader
-        title="Projects"
-        subtitle="A selection of projects I've worked on. From full platforms to creative experiments."
+        title={t("pageTitle")}
+        subtitle={t("pageSubtitle")}
       />
 
       <FilterBar
@@ -54,7 +56,7 @@ export default function ProjectsClient({ projects }: Props) {
                     <div className="absolute top-3 right-3">
                       <span className="inline-flex items-center gap-1 rounded-full bg-amber-500/20 border border-amber-500/30 px-2 py-0.5 text-xs font-medium text-amber-400">
                         <Star className="h-3 w-3 fill-amber-400" />
-                        Featured
+                        {t("featured")}
                       </span>
                     </div>
                   )}
@@ -80,7 +82,7 @@ export default function ProjectsClient({ projects }: Props) {
                     className="inline-flex items-center gap-1.5 text-xs text-muted hover:text-accent transition-colors"
                   >
                     <GitHubIcon className="h-4 w-4" />
-                    Code
+                    {t("code")}
                   </a>
                   {project.live && (
                     <a
@@ -90,7 +92,7 @@ export default function ProjectsClient({ projects }: Props) {
                       className="inline-flex items-center gap-1.5 text-xs text-muted hover:text-accent transition-colors"
                     >
                       <ExternalLink className="h-3.5 w-3.5" />
-                      Demo
+                      {t("demo")}
                     </a>
                   )}
                 </CardFooter>

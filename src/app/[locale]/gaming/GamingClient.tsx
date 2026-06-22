@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { Gamepad2 } from "lucide-react";
 import AnimatedSection from "@/components/AnimatedSection";
 import FilterBar from "@/components/FilterBar";
@@ -18,25 +19,26 @@ const gameFallback = (
   </div>
 );
 
-const statusConfig: Record<GameStatus, { colorClass: string; dot: string; label: string }> = {
-  Completed: { colorClass: "text-emerald-400", dot: "bg-emerald-400", label: "Completed" },
-  Playing:   { colorClass: "text-amber-400",   dot: "bg-amber-400",   label: "Playing" },
-  Backlog:   { colorClass: "text-blue-400",    dot: "bg-blue-400",    label: "Backlog" },
-};
-
-const filterOptions = [
-  { value: "all", label: "All" },
-  { value: "Completed", label: "Completed" },
-  { value: "Playing", label: "Playing" },
-  { value: "Backlog", label: "Backlog" },
-];
-
 type Props = {
   games: Game[];
 };
 
 export default function GamingClient({ games }: Props) {
+  const t = useTranslations("Gaming");
   const [filter, setFilter] = useState<Filter>("all");
+
+  const statusConfig: Record<GameStatus, { colorClass: string; dot: string; label: string }> = {
+    Completed: { colorClass: "text-emerald-400", dot: "bg-emerald-400", label: t("statusCompleted") },
+    Playing:   { colorClass: "text-amber-400",   dot: "bg-amber-400",   label: t("statusPlaying") },
+    Backlog:   { colorClass: "text-blue-400",    dot: "bg-blue-400",    label: t("statusBacklog") },
+  };
+
+  const filterOptions = [
+    { value: "all", label: t("filterAll") },
+    { value: "Completed", label: t("statusCompleted") },
+    { value: "Playing", label: t("statusPlaying") },
+    { value: "Backlog", label: t("statusBacklog") },
+  ];
 
   const filtered =
     filter === "all" ? games : games.filter((g) => g.status === filter);
@@ -48,16 +50,16 @@ export default function GamingClient({ games }: Props) {
     else backlog++;
   }
   const stats = [
-    { value: completed, label: "Completed", colorClass: "gradient-text" },
-    { value: playing,   label: "Playing",   colorClass: "text-amber-400" },
-    { value: backlog,   label: "Backlog",   colorClass: "text-blue-400" },
+    { value: completed, label: t("statusCompleted"), colorClass: "gradient-text" },
+    { value: playing,   label: t("statusPlaying"),   colorClass: "text-amber-400" },
+    { value: backlog,   label: t("statusBacklog"),   colorClass: "text-blue-400" },
   ];
 
   return (
     <PageContainer>
       <SectionHeader
-        title="Gaming"
-        subtitle="The video games I'm passionate about. From epic RPGs to challenging platformers."
+        title={t("pageTitle")}
+        subtitle={t("pageSubtitle")}
       />
 
       <StatGrid stats={stats} />
@@ -75,15 +77,12 @@ export default function GamingClient({ games }: Props) {
           return (
             <AnimatedSection key={game.id} delay={i * 0.06}>
               <div className="group rounded-xl overflow-hidden border border-border/50 bg-card hover:border-border transition-all duration-300 hover:shadow-lg hover:shadow-black/20 flex flex-col">
-                {/* Cover image */}
                 <div className="relative aspect-[3/4] overflow-hidden bg-card">
-                  {/* Blurred background layer */}
                   <div
                     className="absolute inset-0 scale-110 blur-2xl opacity-60"
                     style={{ backgroundImage: `url(${game.image})`, backgroundSize: "cover", backgroundPosition: "center" }}
                   />
                   {gameFallback}
-                  {/* Main cover */}
                   <img
                     src={game.image}
                     alt={game.title}
@@ -94,16 +93,13 @@ export default function GamingClient({ games }: Props) {
                   />
                 </div>
 
-                {/* Footer */}
                 <div className="flex items-center justify-between px-3 py-2 bg-card border-t border-border/40">
-                  {/* Rating badge */}
                   <span className="inline-flex items-center gap-1 text-xs font-bold text-amber-400">
                     <span className="text-amber-400/70 font-normal">★</span>
                     {game.rating > 0 ? game.rating : "—"}
                     <span className="text-muted font-normal">/10</span>
                   </span>
 
-                  {/* Status — hidden when filtering by that status */}
                   {filter === "all" && (
                     <span
                       className={`inline-flex items-center gap-1.5 text-xs font-medium ${status.colorClass}`}

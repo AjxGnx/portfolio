@@ -1,7 +1,7 @@
 "use client";
 
-import Link from "next/link";
-import { Home, ArrowLeft } from "lucide-react";
+import { ArrowLeft, Home } from "lucide-react";
+import { Link } from "@/i18n/navigation";
 
 export default function NotFound() {
   return (
@@ -12,7 +12,7 @@ export default function NotFound() {
             404
           </h1>
           <p className="text-xl text-muted mb-8">
-            This page doesn't exist... yet.
+            This page doesn&apos;t exist... yet.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4">
             <Link

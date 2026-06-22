@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import { useTranslations } from "next-intl";
 import { Mail, MapPin, Send, CheckCircle2, AlertCircle } from "lucide-react";
 import AnimatedSection from "@/components/AnimatedSection";
 import PageContainer from "@/components/PageContainer";
@@ -14,6 +15,7 @@ type Props = {
 };
 
 export default function ContactClient({ siteConfig }: Props) {
+  const t = useTranslations("Contact");
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
@@ -46,8 +48,8 @@ export default function ContactClient({ siteConfig }: Props) {
   return (
     <PageContainer>
       <SectionHeader
-        title="Contact"
-        subtitle="Have a project in mind or just want to say hi? Drop me a message."
+        title={t("pageTitle")}
+        subtitle={t("pageSubtitle")}
       />
 
       <div className="grid grid-cols-1 md:grid-cols-5 gap-8 max-w-4xl mx-auto">
@@ -58,7 +60,7 @@ export default function ContactClient({ siteConfig }: Props) {
                 <Mail className="h-5 w-5 text-accent" />
               </div>
               <div>
-                <p className="text-sm font-medium text-foreground">Email</p>
+                <p className="text-sm font-medium text-foreground">{t("emailLabel")}</p>
                 <a
                   href={`mailto:${siteConfig.email}`}
                   className="text-sm text-muted hover:text-accent transition-colors"
@@ -73,13 +75,13 @@ export default function ContactClient({ siteConfig }: Props) {
                 <MapPin className="h-5 w-5 text-accent" />
               </div>
               <div>
-                <p className="text-sm font-medium text-foreground">Location</p>
+                <p className="text-sm font-medium text-foreground">{t("locationLabel")}</p>
                 <p className="text-sm text-muted">{siteConfig.location}</p>
               </div>
             </div>
 
             <div className="border-t border-border/50 pt-5">
-              <p className="text-xs text-muted mb-3">Find me on</p>
+              <p className="text-xs text-muted mb-3">{t("findMeOn")}</p>
               <div className="flex items-center gap-3">
                 <a
                   href={siteConfig.github}
@@ -122,14 +124,14 @@ export default function ContactClient({ siteConfig }: Props) {
                   htmlFor="name"
                   className="block text-sm font-medium text-foreground mb-1.5"
                 >
-                  Name
+                  {t("nameLabel")}
                 </label>
                 <input
                   id="name"
                   name="name"
                   type="text"
                   required
-                  placeholder="Your name"
+                  placeholder={t("namePlaceholder")}
                   className="w-full rounded-xl border border-border/50 bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-muted/60 focus:outline-none focus:border-accent/50 focus:ring-1 focus:ring-accent/20 transition-colors"
                 />
               </div>
@@ -138,14 +140,14 @@ export default function ContactClient({ siteConfig }: Props) {
                   htmlFor="email"
                   className="block text-sm font-medium text-foreground mb-1.5"
                 >
-                  Email
+                  {t("emailFieldLabel")}
                 </label>
                 <input
                   id="email"
                   name="email"
                   type="email"
                   required
-                  placeholder="you@email.com"
+                  placeholder={t("emailPlaceholder")}
                   className="w-full rounded-xl border border-border/50 bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-muted/60 focus:outline-none focus:border-accent/50 focus:ring-1 focus:ring-accent/20 transition-colors"
                 />
               </div>
@@ -156,14 +158,14 @@ export default function ContactClient({ siteConfig }: Props) {
                 htmlFor="subject"
                 className="block text-sm font-medium text-foreground mb-1.5"
               >
-                Subject
+                {t("subjectLabel")}
               </label>
               <input
                 id="subject"
                 name="subject"
                 type="text"
                 required
-                placeholder="How can I help you?"
+                placeholder={t("subjectPlaceholder")}
                 className="w-full rounded-xl border border-border/50 bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-muted/60 focus:outline-none focus:border-accent/50 focus:ring-1 focus:ring-accent/20 transition-colors"
               />
             </div>
@@ -173,14 +175,14 @@ export default function ContactClient({ siteConfig }: Props) {
                 htmlFor="message"
                 className="block text-sm font-medium text-foreground mb-1.5"
               >
-                Message
+                {t("messageLabel")}
               </label>
               <textarea
                 id="message"
                 name="message"
                 rows={5}
                 required
-                placeholder="Tell me about your project..."
+                placeholder={t("messagePlaceholder")}
                 className="w-full rounded-xl border border-border/50 bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-muted/60 focus:outline-none focus:border-accent/50 focus:ring-1 focus:ring-accent/20 transition-colors resize-none"
               />
             </div>
@@ -193,13 +195,13 @@ export default function ContactClient({ siteConfig }: Props) {
               {submitted ? (
                 <span className="inline-flex items-center gap-2">
                   <CheckCircle2 className="h-4 w-4" />
-                  Message sent!
+                  {t("sentButton")}
                 </span>
               ) : isPending ? (
-                "Sending..."
+                t("sendingButton")
               ) : (
                 <>
-                  Send message
+                  {t("sendButton")}
                   <Send className="h-4 w-4" />
                 </>
               )}

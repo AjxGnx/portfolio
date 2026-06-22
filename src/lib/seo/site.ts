@@ -20,3 +20,9 @@ export const PUBLIC_ROUTES = [
 
 export const GOOGLE_SITE_VERIFICATION =
   "C4yMLGgtTFgIk0Mf-iVRGnU0i-aMVEy0gqXBIhBr1M8";
+
+export const LOCALE_TO_OG: Record<string, string> = {
+  en: "en_US",
+  es: "es_ES",
+  "pt-BR": "pt_BR",
+};
