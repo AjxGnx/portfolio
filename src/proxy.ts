@@ -31,8 +31,22 @@ function redirectWithSessionCookies(
   return redirect;
 }
 
+const NON_LOCALIZED_ROUTES = new Set([
+  "/robots.txt",
+  "/sitemap.xml",
+  "/llms.txt",
+]);
+
 export async function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
+
+  // Static/SEO routes that live outside [locale] — pass through untouched
+  if (
+    NON_LOCALIZED_ROUTES.has(pathname) ||
+    pathname.startsWith("/opengraph-image")
+  ) {
+    return NextResponse.next();
+  }
 
   const isAdminRoute =
     pathname.startsWith("/admin") && pathname !== "/admin/login";

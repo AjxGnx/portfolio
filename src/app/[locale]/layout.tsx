@@ -4,7 +4,6 @@ import { notFound } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import JsonLd from "@/components/JsonLd";
-import { HtmlLang } from "@/components/HtmlLang";
 import { getSiteConfig } from "@/lib/data/portfolio";
 import { rootMetadata } from "@/lib/seo/metadata";
 import { SITE_URL } from "@/lib/seo/site";
@@ -66,7 +65,6 @@ export default async function LocaleLayout({ children, params }: Props) {
 
   return (
     <NextIntlClientProvider messages={messages}>
-      <HtmlLang locale={locale} />
       <JsonLd data={personSchema} />
       <JsonLd data={websiteSchema} />
       <Navbar />
