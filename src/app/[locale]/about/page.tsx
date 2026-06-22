@@ -1,4 +1,4 @@
-import AboutClient from "@/app/about/AboutClient";
+import AboutClient from "@/app/[locale]/about/AboutClient";
 import {
   getCertifications,
   getEducation,
@@ -6,15 +6,21 @@ import {
   getSkills,
   getWorkExperiences,
 } from "@/lib/data/portfolio";
+import type { Locale } from "@/i18n/routing";
 
-export default async function AboutPage() {
+type Props = {
+  params: Promise<{ locale: string }>;
+};
+
+export default async function AboutPage({ params }: Props) {
+  const { locale } = await params;
   const [siteConfig, skills, experience, education, certifications] =
     await Promise.all([
-      getSiteConfig(),
+      getSiteConfig(locale as Locale),
       getSkills(),
-      getWorkExperiences(),
-      getEducation(),
-      getCertifications(),
+      getWorkExperiences(locale as Locale),
+      getEducation(locale as Locale),
+      getCertifications(locale as Locale),
     ]);
 
   return (

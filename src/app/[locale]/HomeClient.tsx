@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import {
   ArrowRight,
@@ -13,46 +13,8 @@ import {
 import AnimatedSection from "@/components/AnimatedSection";
 import SkillCard from "@/components/SkillCard";
 import { GitHubIcon, LinkedInIcon } from "@/components/SocialIcons";
+import { Link } from "@/i18n/navigation";
 import type { SiteConfig, Skill } from "@/lib/types/portfolio";
-
-const highlights = [
-  {
-    icon: Code2,
-    title: "Projects",
-    description:
-      "Production-grade microservices, REST APIs, and backend services built with Go, Python & Node.js.",
-    href: "/projects",
-    color: "text-violet-400",
-    bg: "bg-violet-400/10",
-  },
-  {
-    icon: BookOpen,
-    title: "Reading",
-    description:
-      "Technical reads, dev books, and good stories to fuel continuous learning and growth.",
-    href: "/reading",
-    color: "text-cyan-400",
-    bg: "bg-cyan-400/10",
-  },
-  {
-    icon: Gamepad2,
-    title: "Gaming",
-    description:
-      "Exploring RPGs, metroidvanias, and open-world games across console and PC.",
-    href: "/gaming",
-    color: "text-emerald-400",
-    bg: "bg-emerald-400/10",
-  },
-  {
-    icon: Briefcase,
-    title: "Experience",
-    description:
-      "Over 7 years of professional software engineering experience at Rappi, Platzi, Gipsyy, and other companies.",
-    href: "/about",
-    color: "text-amber-400",
-    bg: "bg-amber-400/10",
-  },
-];
 
 type Props = {
   siteConfig: SiteConfig;
@@ -60,6 +22,43 @@ type Props = {
 };
 
 export default function HomeClient({ siteConfig, topSkills }: Props) {
+  const t = useTranslations("Home");
+
+  const highlights = [
+    {
+      icon: Code2,
+      title: t("explore.projects.title"),
+      description: t("explore.projects.description"),
+      href: "/projects" as const,
+      color: "text-violet-400",
+      bg: "bg-violet-400/10",
+    },
+    {
+      icon: BookOpen,
+      title: t("explore.reading.title"),
+      description: t("explore.reading.description"),
+      href: "/reading" as const,
+      color: "text-cyan-400",
+      bg: "bg-cyan-400/10",
+    },
+    {
+      icon: Gamepad2,
+      title: t("explore.gaming.title"),
+      description: t("explore.gaming.description"),
+      href: "/gaming" as const,
+      color: "text-emerald-400",
+      bg: "bg-emerald-400/10",
+    },
+    {
+      icon: Briefcase,
+      title: t("explore.experience.title"),
+      description: t("explore.experience.description"),
+      href: "/about" as const,
+      color: "text-amber-400",
+      bg: "bg-amber-400/10",
+    },
+  ];
+
   return (
     <div className="dot-pattern">
       <section className="relative pt-10 pb-10 sm:py-20 lg:py-24">
@@ -70,7 +69,6 @@ export default function HomeClient({ siteConfig, topSkills }: Props) {
 
         <div className="relative mx-auto max-w-6xl px-4 sm:px-6 py-4 sm:py-10 lg:py-14">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            {/* Photo: above text on mobile (order-1), right column on desktop (order-2) */}
             <div className="flex justify-center items-center order-1 lg:order-2 animate-fade-in-up-2">
               <div className="relative w-64 sm:w-80 lg:w-full">
                 <div className="absolute -inset-4 bg-accent/15 rounded-3xl blur-2xl" />
@@ -86,10 +84,9 @@ export default function HomeClient({ siteConfig, topSkills }: Props) {
               </div>
             </div>
 
-            {/* Left column: text, buttons, and terminal (order-2 on mobile, order-1 on desktop) */}
             <div className="order-2 lg:order-1">
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-[1.1] mb-4 animate-fade-in-up">
-                Hey, I&apos;m{" "}
+                {t("greeting")}{" "}
                 <span className="gradient-text">{siteConfig.name}</span>
               </h1>
 
@@ -110,14 +107,14 @@ export default function HomeClient({ siteConfig, topSkills }: Props) {
                   href="/projects"
                   className="inline-flex items-center gap-2 rounded-xl bg-accent px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-accent/90 hover:scale-105 active:scale-95"
                 >
-                  View Projects
+                  {t("viewProjects")}
                   <ArrowRight className="h-4 w-4" />
                 </Link>
                 <Link
                   href="/contact"
                   className="inline-flex items-center gap-2 rounded-xl border border-border px-6 py-3 text-sm font-semibold text-foreground transition-all hover:bg-card hover:border-accent/30 hover:scale-105 active:scale-95"
                 >
-                  Get in Touch
+                  {t("getInTouch")}
                 </Link>
                 <div className="flex items-center gap-3 ml-2">
                   <a
@@ -154,22 +151,22 @@ export default function HomeClient({ siteConfig, topSkills }: Props) {
                 <pre className="font-mono text-xs sm:text-sm text-muted leading-relaxed">
                   <code>
                     <span className="text-accent">$</span>{" "}
-                    <span className="text-foreground">whoami</span>
+                    <span className="text-foreground">{t("terminal.whoami")}</span>
                     {"\n"}
-                    <span className="text-accent-secondary">→</span> Senior Backend
-                    Developer & Tech Lead
-                    {"\n"}
-                    <span className="text-accent">$</span>{" "}
-                    <span className="text-foreground">cat interests.txt</span>
-                    {"\n"}
-                    <span className="text-accent-secondary">→</span> Go, Python,
-                    Node.js, Kafka
+                    <span className="text-accent-secondary">→</span>{" "}
+                    {t("terminal.jobTitle")}
                     {"\n"}
                     <span className="text-accent">$</span>{" "}
-                    <span className="text-foreground">cat hobbies.txt</span>
+                    <span className="text-foreground">{t("terminal.catInterests")}</span>
                     {"\n"}
-                    <span className="text-accent-secondary">→</span> books, gaming,
-                    learning
+                    <span className="text-accent-secondary">→</span>{" "}
+                    {t("terminal.interests")}
+                    {"\n"}
+                    <span className="text-accent">$</span>{" "}
+                    <span className="text-foreground">{t("terminal.catHobbies")}</span>
+                    {"\n"}
+                    <span className="text-accent-secondary">→</span>{" "}
+                    {t("terminal.hobbies")}
                     {"\n"}
                     <span className="text-accent">$</span>{" "}
                     <span className="text-foreground animate-pulse">▊</span>
@@ -183,10 +180,9 @@ export default function HomeClient({ siteConfig, topSkills }: Props) {
 
       <section className="mx-auto max-w-6xl px-4 sm:px-6 py-12 sm:py-16 border-t border-border/50">
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 items-start">
-          {/* Bio text — left 3 cols */}
           <AnimatedSection className="lg:col-span-3">
             <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-4">
-              About{" "}
+              {t("about.title")}{" "}
               <span className="gradient-text">{siteConfig.name}</span>
             </h2>
             <p className="text-sm sm:text-base text-muted leading-relaxed">
@@ -196,19 +192,18 @@ export default function HomeClient({ siteConfig, topSkills }: Props) {
               href="/about"
               className="inline-flex items-center gap-2 mt-6 text-sm text-muted hover:text-accent transition-colors"
             >
-              Full profile & experience
+              {t("about.readMore")}
               <ArrowRight className="h-4 w-4" />
             </Link>
           </AnimatedSection>
 
-          {/* Stats — right 2 cols */}
           <AnimatedSection className="lg:col-span-2" delay={0.15}>
             <div className="grid grid-cols-2 gap-3">
               {[
-                { value: "7+", label: "Years experience" },
-                { value: "3", label: "Companies" },
-                { value: "Go · Python · Node.js", label: "Core stack" },
-                { value: "Kafka · PostgreSQL · AWS", label: "Infrastructure" },
+                { value: "7+", label: t("about.yearsExp") },
+                { value: "3", label: t("about.companies") },
+                { value: "Go · Python · Node.js", label: t("about.coreStack") },
+                { value: "Kafka · PostgreSQL · AWS", label: t("about.infra") },
               ].map((stat) => (
                 <div
                   key={stat.label}
@@ -224,7 +219,7 @@ export default function HomeClient({ siteConfig, topSkills }: Props) {
 
             <div className="mt-3 glass rounded-2xl p-4">
               <p className="text-xs text-muted mb-2 font-medium uppercase tracking-wider">
-                Currently at
+                {t("about.currentlyAt")}
               </p>
               <div className="flex flex-wrap gap-2">
                 {["Gipsyy", "Previously: Rappi", "Previously: Platzi"].map(
@@ -246,11 +241,11 @@ export default function HomeClient({ siteConfig, topSkills }: Props) {
       <section className="mx-auto max-w-6xl px-4 sm:px-6 py-20">
         <AnimatedSection className="mb-12">
           <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-3">
-            Explore my <span className="gradient-text">world</span>
+            {t("explore.title")}{" "}
+            <span className="gradient-text">{t("explore.titleHighlight")}</span>
           </h2>
           <p className="text-sm text-muted max-w-2xl">
-            Projects, reading notes, gaming picks, and professional
-            experience — all in one place.
+            {t("explore.subtitle")}
           </p>
         </AnimatedSection>
 
@@ -284,13 +279,11 @@ export default function HomeClient({ siteConfig, topSkills }: Props) {
       <section className="mx-auto max-w-6xl px-4 sm:px-6 py-20 border-t border-border/50">
         <AnimatedSection className="mb-8">
           <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-3">
-            Tech <span className="gradient-text">Stack</span>
+            {t("stack.title")}{" "}
+            <span className="gradient-text">{t("stack.titleHighlight")}</span>
           </h2>
           <p className="text-sm text-muted">
-            The tools behind the distributed systems, APIs, and data pipelines
-            I build every day. Each technology reflects hands-on production
-            experience solving real engineering challenges at companies like
-            Gipsyy, Rappi, and Platzi.
+            {t("stack.subtitle")}
           </p>
         </AnimatedSection>
 
@@ -307,7 +300,7 @@ export default function HomeClient({ siteConfig, topSkills }: Props) {
             href="/about"
             className="inline-flex items-center gap-2 text-sm text-muted hover:text-accent transition-colors"
           >
-            View all skills
+            {t("stack.viewAll")}
             <ArrowRight className="h-4 w-4" />
           </Link>
         </AnimatedSection>

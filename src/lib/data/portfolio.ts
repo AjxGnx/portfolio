@@ -10,6 +10,8 @@ import {
 } from "@/data/mock";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
 import { createClient } from "@/lib/supabase/server";
+import { translateContent, translateArray } from "@/lib/i18n/translate";
+import type { Locale } from "@/i18n/routing";
 import type {
   Book,
   Certification,
@@ -49,29 +51,28 @@ function mapSiteConfig(row: {
   };
 }
 
-export async function getSiteConfig(): Promise<SiteConfig> {
+export async function getSiteConfig(locale: Locale = "en"): Promise<SiteConfig> {
+  let config: SiteConfig;
+
   if (!isSupabaseConfigured()) {
-    return {
+    config = {
       ...mockSiteConfig,
       githubProfileUrl: mockSiteConfig.github,
     };
+  } else {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("site_settings")
+      .select("*")
+      .limit(1)
+      .single();
+
+    config = error || !data
+      ? { ...mockSiteConfig, githubProfileUrl: mockSiteConfig.github }
+      : mapSiteConfig(data);
   }
 
-  const supabase = await createClient();
-  const { data, error } = await supabase
-    .from("site_settings")
-    .select("*")
-    .limit(1)
-    .single();
-
-  if (error || !data) {
-    return {
-      ...mockSiteConfig,
-      githubProfileUrl: mockSiteConfig.github,
-    };
-  }
-
-  return mapSiteConfig(data);
+  return translateContent(config, ["description", "bio", "shortTitle"], locale);
 }
 
 export async function getSkills(): Promise<Skill[]> {
@@ -102,9 +103,11 @@ export async function getSkills(): Promise<Skill[]> {
   return data;
 }
 
-export async function getWorkExperiences(): Promise<WorkExperience[]> {
+export async function getWorkExperiences(locale: Locale = "en"): Promise<WorkExperience[]> {
+  let experiences: WorkExperience[];
+
   if (!isSupabaseConfigured()) {
-    return mockExperience.map((e) => ({
+    experiences = mockExperience.map((e) => ({
       id: String(e.id),
       role: e.role,
       company: e.company,
@@ -113,88 +116,94 @@ export async function getWorkExperiences(): Promise<WorkExperience[]> {
       description: e.description,
       technologies: e.technologies,
     }));
+  } else {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("work_experiences")
+      .select("id, role, company, period, location, description, technologies")
+      .order("sort_order", { ascending: true });
+
+    experiences = error || !data?.length
+      ? mockExperience.map((e) => ({
+          id: String(e.id),
+          role: e.role,
+          company: e.company,
+          period: e.period,
+          location: e.location ?? null,
+          description: e.description,
+          technologies: e.technologies,
+        }))
+      : data;
   }
 
-  const supabase = await createClient();
-  const { data, error } = await supabase
-    .from("work_experiences")
-    .select("id, role, company, period, location, description, technologies")
-    .order("sort_order", { ascending: true });
-
-  if (error || !data?.length) {
-    return mockExperience.map((e) => ({
-      id: String(e.id),
-      role: e.role,
-      company: e.company,
-      period: e.period,
-      location: e.location ?? null,
-      description: e.description,
-      technologies: e.technologies,
-    }));
-  }
-
-  return data;
+  return translateArray(experiences, ["role", "description"], locale);
 }
 
-export async function getEducation(): Promise<EducationEntry[]> {
+export async function getEducation(locale: Locale = "en"): Promise<EducationEntry[]> {
+  let entries: EducationEntry[];
+
   if (!isSupabaseConfigured()) {
-    return mockEducation.map((e, i) => ({
+    entries = mockEducation.map((e, i) => ({
       id: String(i + 1),
       institution: e.institution,
       degree: e.degree,
       field: e.field,
       period: e.period,
     }));
+  } else {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("education_entries")
+      .select("id, institution, degree, field, period")
+      .order("sort_order", { ascending: true });
+
+    entries = error || !data?.length
+      ? mockEducation.map((e, i) => ({
+          id: String(i + 1),
+          institution: e.institution,
+          degree: e.degree,
+          field: e.field,
+          period: e.period,
+        }))
+      : data;
   }
 
-  const supabase = await createClient();
-  const { data, error } = await supabase
-    .from("education_entries")
-    .select("id, institution, degree, field, period")
-    .order("sort_order", { ascending: true });
-
-  if (error || !data?.length) {
-    return mockEducation.map((e, i) => ({
-      id: String(i + 1),
-      institution: e.institution,
-      degree: e.degree,
-      field: e.field,
-      period: e.period,
-    }));
-  }
-
-  return data;
+  return translateArray(entries, ["degree", "field"], locale);
 }
 
-export async function getCertifications(): Promise<Certification[]> {
+export async function getCertifications(locale: Locale = "en"): Promise<Certification[]> {
+  let certs: Certification[];
+
   if (!isSupabaseConfigured()) {
-    return mockCertifications.map((c, i) => ({
+    certs = mockCertifications.map((c, i) => ({
       id: String(i + 1),
       name: c.name,
       issuer: c.issuer,
     }));
+  } else {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("certifications")
+      .select("id, name, issuer")
+      .order("sort_order", { ascending: true });
+
+    certs = error || !data?.length
+      ? mockCertifications.map((c, i) => ({
+          id: String(i + 1),
+          name: c.name,
+          issuer: c.issuer,
+        }))
+      : data;
   }
 
-  const supabase = await createClient();
-  const { data, error } = await supabase
-    .from("certifications")
-    .select("id, name, issuer")
-    .order("sort_order", { ascending: true });
-
-  if (error || !data?.length) {
-    return mockCertifications.map((c, i) => ({
-      id: String(i + 1),
-      name: c.name,
-      issuer: c.issuer,
-    }));
-  }
-
-  return data;
+  return translateArray(certs, ["name"], locale);
 }
 
-export async function getProjects(): Promise<PortfolioProject[]> {
+export async function getProjects(locale: Locale = "en"): Promise<PortfolioProject[]> {
+  let projects: PortfolioProject[];
+
   if (!isSupabaseConfigured()) {
-    return mockProjects.map((p) => ({
+    projects = mockProjects.map((p) => ({
       id: String(p.id),
       title: p.title,
       description: p.description,
@@ -204,44 +213,46 @@ export async function getProjects(): Promise<PortfolioProject[]> {
       live: p.live,
       featured: p.featured,
     }));
+  } else {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("portfolio_projects")
+      .select(
+        "id, title, description, image_path, technologies, github_url, live_url, featured"
+      )
+      .order("sort_order", { ascending: true });
+
+    projects = error || !data?.length
+      ? mockProjects.map((p) => ({
+          id: String(p.id),
+          title: p.title,
+          description: p.description,
+          image: p.image,
+          technologies: p.technologies,
+          github: p.github,
+          live: p.live,
+          featured: p.featured,
+        }))
+      : data.map((p) => ({
+          id: p.id,
+          title: p.title,
+          description: p.description,
+          image: p.image_path,
+          technologies: p.technologies,
+          github: p.github_url,
+          live: p.live_url,
+          featured: p.featured,
+        }));
   }
 
-  const supabase = await createClient();
-  const { data, error } = await supabase
-    .from("portfolio_projects")
-    .select(
-      "id, title, description, image_path, technologies, github_url, live_url, featured"
-    )
-    .order("sort_order", { ascending: true });
-
-  if (error || !data?.length) {
-    return mockProjects.map((p) => ({
-      id: String(p.id),
-      title: p.title,
-      description: p.description,
-      image: p.image,
-      technologies: p.technologies,
-      github: p.github,
-      live: p.live,
-      featured: p.featured,
-    }));
-  }
-
-  return data.map((p) => ({
-    id: p.id,
-    title: p.title,
-    description: p.description,
-    image: p.image_path,
-    technologies: p.technologies,
-    github: p.github_url,
-    live: p.live_url,
-    featured: p.featured,
-  }));
+  return translateArray(projects, ["title", "description"], locale);
 }
 
-export async function getBooks(): Promise<Book[]> {
+export async function getBooks(locale: Locale = "en"): Promise<Book[]> {
+  let books: Book[];
+
   if (!isSupabaseConfigured()) {
-    return mockBooks.map((b) => ({
+    books = mockBooks.map((b) => ({
       id: String(b.id),
       title: b.title,
       author: b.author,
@@ -251,42 +262,44 @@ export async function getBooks(): Promise<Book[]> {
       review: b.review,
       category: b.category,
     }));
+  } else {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("books")
+      .select("id, title, author, cover_path, rating, status, review, category")
+      .order("sort_order", { ascending: true });
+
+    books = error || !data?.length
+      ? mockBooks.map((b) => ({
+          id: String(b.id),
+          title: b.title,
+          author: b.author,
+          cover: b.cover,
+          rating: b.rating,
+          status: b.status,
+          review: b.review,
+          category: b.category,
+        }))
+      : data.map((b) => ({
+          id: b.id,
+          title: b.title,
+          author: b.author,
+          cover: b.cover_path,
+          rating: b.rating,
+          status: b.status,
+          review: b.review,
+          category: b.category,
+        }));
   }
 
-  const supabase = await createClient();
-  const { data, error } = await supabase
-    .from("books")
-    .select("id, title, author, cover_path, rating, status, review, category")
-    .order("sort_order", { ascending: true });
-
-  if (error || !data?.length) {
-    return mockBooks.map((b) => ({
-      id: String(b.id),
-      title: b.title,
-      author: b.author,
-      cover: b.cover,
-      rating: b.rating,
-      status: b.status,
-      review: b.review,
-      category: b.category,
-    }));
-  }
-
-  return data.map((b) => ({
-    id: b.id,
-    title: b.title,
-    author: b.author,
-    cover: b.cover_path,
-    rating: b.rating,
-    status: b.status,
-    review: b.review,
-    category: b.category,
-  }));
+  return translateArray(books, ["review"], locale);
 }
 
-export async function getGames(): Promise<Game[]> {
+export async function getGames(locale: Locale = "en"): Promise<Game[]> {
+  let games: Game[];
+
   if (!isSupabaseConfigured()) {
-    return mockGames.map((g) => ({
+    games = mockGames.map((g) => ({
       id: String(g.id),
       title: g.title,
       platform: g.platform,
@@ -296,37 +309,37 @@ export async function getGames(): Promise<Game[]> {
       image: g.image,
       review: g.review,
     }));
+  } else {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("games")
+      .select("id, title, platform, genre, rating, status, image_path, review")
+      .order("sort_order", { ascending: true });
+
+    games = error || !data?.length
+      ? mockGames.map((g) => ({
+          id: String(g.id),
+          title: g.title,
+          platform: g.platform,
+          genre: g.genre,
+          rating: g.rating,
+          status: g.status,
+          image: g.image,
+          review: g.review,
+        }))
+      : data.map((g) => ({
+          id: g.id,
+          title: g.title,
+          platform: g.platform,
+          genre: g.genre,
+          rating: Number(g.rating),
+          status: g.status,
+          image: g.image_path,
+          review: g.review,
+        }));
   }
 
-  const supabase = await createClient();
-  const { data, error } = await supabase
-    .from("games")
-    .select("id, title, platform, genre, rating, status, image_path, review")
-    .order("sort_order", { ascending: true });
-
-  if (error || !data?.length) {
-    return mockGames.map((g) => ({
-      id: String(g.id),
-      title: g.title,
-      platform: g.platform,
-      genre: g.genre,
-      rating: g.rating,
-      status: g.status,
-      image: g.image,
-      review: g.review,
-    }));
-  }
-
-  return data.map((g) => ({
-    id: g.id,
-    title: g.title,
-    platform: g.platform,
-    genre: g.genre,
-    rating: Number(g.rating),
-    status: g.status,
-    image: g.image_path,
-    review: g.review,
-  }));
+  return translateArray(games, ["review"], locale);
 }
 
 export async function insertContactMessage(

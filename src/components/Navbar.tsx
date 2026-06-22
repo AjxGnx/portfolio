@@ -1,22 +1,24 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { Menu, X, Code2 } from "lucide-react";
-
-const navLinks = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
-  { href: "/projects", label: "Projects" },
-  { href: "/reading", label: "Reading" },
-  { href: "/gaming", label: "Gaming" },
-  { href: "/contact", label: "Contact" },
-];
+import { Link, usePathname } from "@/i18n/navigation";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 export default function Navbar() {
+  const t = useTranslations("Nav");
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
+
+  const navLinks = [
+    { href: "/" as const, label: t("home") },
+    { href: "/about" as const, label: t("about") },
+    { href: "/projects" as const, label: t("projects") },
+    { href: "/reading" as const, label: t("reading") },
+    { href: "/gaming" as const, label: t("gaming") },
+    { href: "/contact" as const, label: t("contact") },
+  ];
 
   return (
     <nav className="glass fixed top-0 left-0 right-0 z-50">
@@ -54,41 +56,47 @@ export default function Navbar() {
                 </Link>
               );
             })}
+            <div className="ml-2">
+              <LanguageSwitcher />
+            </div>
           </div>
 
-          {/* Mobile toggle */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden p-2 text-muted hover:text-foreground transition-colors"
-            aria-label="Toggle menu"
-          >
-            {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </button>
+          {/* Mobile controls */}
+          <div className="md:hidden flex items-center gap-2">
+            <LanguageSwitcher />
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="p-2 text-muted hover:text-foreground transition-colors"
+              aria-label="Toggle menu"
+            >
+              {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </button>
+          </div>
         </div>
       </div>
 
       {/* Mobile menu */}
       {isOpen && (
         <div className="md:hidden border-t border-border/50">
-            <div className="px-4 py-3 space-y-1">
-              {navLinks.map((link) => {
-                const isActive = pathname === link.href;
-                return (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    onClick={() => setIsOpen(false)}
-                    className={`block px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                      isActive
-                        ? "text-accent bg-accent/10"
-                        : "text-muted hover:text-foreground hover:bg-card-hover"
-                    }`}
-                  >
-                    {link.label}
-                  </Link>
-                );
-              })}
-            </div>
+          <div className="px-4 py-3 space-y-1">
+            {navLinks.map((link) => {
+              const isActive = pathname === link.href;
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setIsOpen(false)}
+                  className={`block px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+                    isActive
+                      ? "text-accent bg-accent/10"
+                      : "text-muted hover:text-foreground hover:bg-card-hover"
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
+          </div>
         </div>
       )}
     </nav>

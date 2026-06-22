@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { MapPin, Calendar, Download, GraduationCap, Award, Mail } from "lucide-react";
 import AnimatedSection from "@/components/AnimatedSection";
@@ -32,13 +33,14 @@ export default function AboutClient({
   education,
   certifications,
 }: Props) {
+  const t = useTranslations("About");
   const categories = [...new Set(skills.map((s) => s.category))];
 
   return (
     <PageContainer>
       <SectionHeader
-        title="About Me"
-        subtitle="Learn more about who I am, what I do, and what drives me."
+        title={t("pageTitle")}
+        subtitle={t("pageSubtitle")}
       />
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
@@ -79,7 +81,7 @@ export default function AboutClient({
               </a>
               <button className="inline-flex items-center gap-2 rounded-xl border border-border/50 px-4 py-2 text-sm font-medium text-muted hover:text-accent hover:border-accent/20 transition-colors w-full justify-center">
                 <Download className="h-4 w-4" />
-                Download CV
+                {t("downloadCV")}
               </button>
             </div>
           </div>
@@ -88,25 +90,24 @@ export default function AboutClient({
         <AnimatedSection className="md:col-span-2" delay={0.1}>
           <div className="glass rounded-2xl p-6 h-full">
             <h3 className="text-xl font-bold mb-4">
-              <span className="gradient-text">Who am I?</span>
+              <span className="gradient-text">{t("whoAmI")}</span>
             </h3>
             <div className="space-y-4 text-muted text-sm leading-relaxed">
               <p>{siteConfig.description}</p>
               <p>{siteConfig.bio}</p>
               <p>
-                Throughout my career I&apos;ve had the opportunity to work at companies
-                like <span className="text-accent font-medium">Rappi</span>,{" "}
-                <span className="text-accent font-medium">Platzi</span>, and{" "}
-                <span className="text-accent font-medium">Gipsyy</span>, where I&apos;ve
-                led development teams, designed microservice architectures,
-                and built solutions that impact millions of users.
+                {t.rich("careerParagraph", {
+                  rappi: (chunks) => <span className="text-accent font-medium">{chunks}</span>,
+                  platzi: (chunks) => <span className="text-accent font-medium">{chunks}</span>,
+                  gipsyy: (chunks) => <span className="text-accent font-medium">{chunks}</span>,
+                })}
               </p>
               <p>
-                My main stack includes <span className="text-foreground font-medium">Go</span>,{" "}
-                <span className="text-foreground font-medium">Python</span>, and{" "}
-                <span className="text-foreground font-medium">Node.js</span>, with
-                deep experience in microservices, Apache Kafka, event-driven
-                architectures, BigData, and cloud services (AWS, GCP).
+                {t.rich("stackParagraph", {
+                  go: (chunks) => <span className="text-foreground font-medium">{chunks}</span>,
+                  python: (chunks) => <span className="text-foreground font-medium">{chunks}</span>,
+                  node: (chunks) => <span className="text-foreground font-medium">{chunks}</span>,
+                })}
               </p>
             </div>
           </div>
@@ -115,7 +116,7 @@ export default function AboutClient({
 
       <AnimatedSection className="mb-20">
         <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-8">
-          Technical <span className="gradient-text">Skills</span>
+          {t("skills")} <span className="gradient-text">{t("skillsHighlight")}</span>
         </h2>
 
         <div className="space-y-8">
@@ -138,7 +139,7 @@ export default function AboutClient({
 
       <AnimatedSection className="mb-20">
         <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-8">
-          Professional <span className="gradient-text">Experience</span>
+          {t("experience")} <span className="gradient-text">{t("experienceHighlight")}</span>
         </h2>
 
         <div className="relative">
@@ -186,7 +187,7 @@ export default function AboutClient({
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <AnimatedSection>
           <h2 className="text-2xl font-bold tracking-tight mb-6">
-            <span className="gradient-text">Education</span>
+            <span className="gradient-text">{t("education")}</span>
           </h2>
           <div className="space-y-4">
             {education.map((edu) => (
@@ -212,7 +213,7 @@ export default function AboutClient({
 
         <AnimatedSection delay={0.1}>
           <h2 className="text-2xl font-bold tracking-tight mb-6">
-            <span className="gradient-text">Certifications</span>
+            <span className="gradient-text">{t("certifications")}</span>
           </h2>
           <div className="space-y-3">
             {certifications.map((cert) => (

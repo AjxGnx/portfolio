@@ -1,13 +1,12 @@
+import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import JsonLd from "@/components/JsonLd";
-import { getSiteConfig } from "@/lib/data/portfolio";
-import { rootMetadata } from "@/lib/seo/metadata";
-import { SITE_URL } from "@/lib/seo/site";
+import { getLocale } from "next-intl/server";
 import "./globals.css";
+import { SITE_URL } from "@/lib/seo/site";
 
-export const metadata = rootMetadata;
+export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
+};
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,55 +23,14 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const siteConfig = await getSiteConfig();
-  const richDescription = [siteConfig.description, siteConfig.bio]
-    .filter(Boolean)
-    .join(" ");
-
-  const personSchema = {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    name: siteConfig.name,
-    url: SITE_URL,
-    image: `${SITE_URL}/hero.jpg`,
-    jobTitle: siteConfig.shortTitle,
-    description: richDescription,
-    email: siteConfig.email,
-    sameAs: [siteConfig.github, siteConfig.linkedin],
-    knowsAbout: [
-      "Go",
-      "Python",
-      "Node.js",
-      "Microservices",
-      "Apache Kafka",
-      "PostgreSQL",
-    ],
-  };
-
-  const websiteSchema = {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    name: siteConfig.name,
-    url: SITE_URL,
-    description: richDescription,
-    author: {
-      "@type": "Person",
-      name: siteConfig.name,
-    },
-  };
+  const locale = await getLocale();
 
   return (
     <html
-      lang="en"
+      lang={locale}
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">
-        <JsonLd data={personSchema} />
-        <JsonLd data={websiteSchema} />
-        <Navbar />
-        <main className="flex-1 pt-16">{children}</main>
-        <Footer />
-      </body>
+      <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );
 }

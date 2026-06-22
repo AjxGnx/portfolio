@@ -1,0 +1,120 @@
+{
+  "Nav": {
+    "home": "Home",
+    "about": "About",
+    "projects": "Projects",
+    "reading": "Reading",
+    "gaming": "Gaming",
+    "contact": "Contact"
+  },
+  "Footer": {
+    "builtWith": "Built with"
+  },
+  "Home": {
+    "greeting": "Hey, I'm",
+    "viewProjects": "View Projects",
+    "getInTouch": "Get in Touch",
+    "terminal": {
+      "whoami": "whoami",
+      "catInterests": "cat interests.txt",
+      "catHobbies": "cat hobbies.txt",
+      "interests": "Go, Python, Node.js, Kafka",
+      "hobbies": "books, gaming, learning",
+      "jobTitle": "Senior Backend Developer & Tech Lead"
+    },
+    "about": {
+      "title": "About",
+      "readMore": "Full profile & experience",
+      "yearsExp": "Years experience",
+      "companies": "Companies",
+      "coreStack": "Core stack",
+      "infra": "Infrastructure",
+      "currentlyAt": "Currently at"
+    },
+    "explore": {
+      "title": "Explore my",
+      "titleHighlight": "world",
+      "subtitle": "Projects, reading notes, gaming picks, and professional experience — all in one place.",
+      "projects": {
+        "title": "Projects",
+        "description": "Production-grade microservices, REST APIs, and backend services built with Go, Python & Node.js."
+      },
+      "reading": {
+        "title": "Reading",
+        "description": "Technical reads, dev books, and good stories to fuel continuous learning and growth."
+      },
+      "gaming": {
+        "title": "Gaming",
+        "description": "Exploring RPGs, metroidvanias, and open-world games across console and PC."
+      },
+      "experience": {
+        "title": "Experience",
+        "description": "Over 7 years of professional software engineering experience at Rappi, Platzi, Gipsyy, and other companies."
+      }
+    },
+    "stack": {
+      "title": "Tech",
+      "titleHighlight": "Stack",
+      "subtitle": "The tools behind the distributed systems, APIs, and data pipelines I build every day. Each technology reflects hands-on production experience solving real engineering challenges at companies like Gipsyy, Rappi, and Platzi.",
+      "viewAll": "View all skills"
+    }
+  },
+  "About": {
+    "pageTitle": "About Me",
+    "pageSubtitle": "Learn more about who I am, what I do, and what drives me.",
+    "whoAmI": "Who am I?",
+    "careerParagraph": "Throughout my career I've had the opportunity to work at companies like <rappi>Rappi</rappi>, <platzi>Platzi</platzi>, and <gipsyy>Gipsyy</gipsyy>, where I've led development teams, designed microservice architectures, and built solutions that impact millions of users.",
+    "stackParagraph": "My main stack includes <go>Go</go>, <python>Python</python>, and <node>Node.js</node>, with deep experience in microservices, Apache Kafka, event-driven architectures, BigData, and cloud services (AWS, GCP).",
+    "downloadCV": "Download CV",
+    "skills": "Technical",
+    "skillsHighlight": "Skills",
+    "experience": "Professional",
+    "experienceHighlight": "Experience",
+    "education": "Education",
+    "certifications": "Certifications"
+  },
+  "Projects": {
+    "pageTitle": "Projects",
+    "pageSubtitle": "A selection of projects I've worked on. From full platforms to creative experiments.",
+    "filterAll": "All",
+    "filterFeatured": "Featured",
+    "featured": "Featured",
+    "code": "Code",
+    "demo": "Demo"
+  },
+  "Reading": {
+    "pageTitle": "Reading",
+    "pageSubtitle": "Books that shaped me as a developer and that I enjoy in my free time.",
+    "filterAll": "All",
+    "statusRead": "Read",
+    "statusReading": "Reading",
+    "statusToRead": "To Read"
+  },
+  "Gaming": {
+    "pageTitle": "Gaming",
+    "pageSubtitle": "The video games I'm passionate about. From epic RPGs to challenging platformers.",
+    "filterAll": "All",
+    "statusCompleted": "Completed",
+    "statusPlaying": "Playing",
+    "statusBacklog": "Backlog"
+  },
+  "Contact": {
+    "pageTitle": "Contact",
+    "pageSubtitle": "Have a project in mind or just want to say hi? Drop me a message.",
+    "emailLabel": "Email",
+    "locationLabel": "Location",
+    "findMeOn": "Find me on",
+    "nameLabel": "Name",
+    "namePlaceholder": "Your name",
+    "emailFieldLabel": "Email",
+    "emailPlaceholder": "you@email.com",
+    "subjectLabel": "Subject",
+    "subjectPlaceholder": "How can I help you?",
+    "messageLabel": "Message",
+    "messagePlaceholder": "Tell me about your project...",
+    "sendButton": "Send message",
+    "sendingButton": "Sending...",
+    "sentButton": "Message sent!",
+    "errorGeneric": "Failed to send message. Please try again."
+  }
+}

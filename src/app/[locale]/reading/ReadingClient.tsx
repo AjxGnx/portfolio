@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { BookOpen } from "lucide-react";
 import AnimatedSection from "@/components/AnimatedSection";
 import FilterBar from "@/components/FilterBar";
@@ -18,25 +19,26 @@ const bookFallback = (
   </div>
 );
 
-const statusConfig: Record<BookStatus, { colorClass: string; dot: string; label: string }> = {
-  Read:      { colorClass: "text-emerald-400", dot: "bg-emerald-400", label: "Read" },
-  Reading:   { colorClass: "text-amber-400",   dot: "bg-amber-400",   label: "Reading" },
-  "To Read": { colorClass: "text-blue-400",    dot: "bg-blue-400",    label: "To Read" },
-};
-
-const filterOptions = [
-  { value: "all", label: "All" },
-  { value: "Read", label: "Read" },
-  { value: "Reading", label: "Reading" },
-  { value: "To Read", label: "To Read" },
-];
-
 type Props = {
   books: Book[];
 };
 
 export default function ReadingClient({ books }: Props) {
+  const t = useTranslations("Reading");
   const [filter, setFilter] = useState<Filter>("all");
+
+  const statusConfig: Record<BookStatus, { colorClass: string; dot: string; label: string }> = {
+    Read:      { colorClass: "text-emerald-400", dot: "bg-emerald-400", label: t("statusRead") },
+    Reading:   { colorClass: "text-amber-400",   dot: "bg-amber-400",   label: t("statusReading") },
+    "To Read": { colorClass: "text-blue-400",    dot: "bg-blue-400",    label: t("statusToRead") },
+  };
+
+  const filterOptions = [
+    { value: "all", label: t("filterAll") },
+    { value: "Read", label: t("statusRead") },
+    { value: "Reading", label: t("statusReading") },
+    { value: "To Read", label: t("statusToRead") },
+  ];
 
   const filtered =
     filter === "all" ? books : books.filter((b) => b.status === filter);
@@ -48,16 +50,16 @@ export default function ReadingClient({ books }: Props) {
     else toRead++;
   }
   const stats = [
-    { value: read,    label: "Read",    colorClass: "text-emerald-400" },
-    { value: reading, label: "Reading", colorClass: "text-amber-400" },
-    { value: toRead,  label: "To Read", colorClass: "text-blue-400" },
+    { value: read,    label: t("statusRead"),    colorClass: "text-emerald-400" },
+    { value: reading, label: t("statusReading"), colorClass: "text-amber-400" },
+    { value: toRead,  label: t("statusToRead"),  colorClass: "text-blue-400" },
   ];
 
   return (
     <PageContainer>
       <SectionHeader
-        title="Reading"
-        subtitle="Books that shaped me as a developer and that I enjoy in my free time."
+        title={t("pageTitle")}
+        subtitle={t("pageSubtitle")}
       />
 
       <StatGrid stats={stats} />
@@ -76,19 +78,16 @@ export default function ReadingClient({ books }: Props) {
             <AnimatedSection key={book.id} delay={i * 0.04}>
               <div className="group rounded-xl overflow-hidden border border-white/5 hover:border-white/15 transition-all duration-300 hover:shadow-lg hover:shadow-black/20 flex flex-col">
 
-                {/* Cover — portrait, clean, no overlays */}
                 <div className="relative aspect-[2/3] overflow-hidden bg-black">
                   {bookFallback}
 
                   {book.cover && (
                     <>
-                      {/* Blur layer via CSS background-image — single network fetch */}
                       <div
                         aria-hidden
                         className="absolute inset-0 scale-110 blur-2xl opacity-40"
                         style={{ backgroundImage: `url(${book.cover})`, backgroundSize: "cover", backgroundPosition: "center" }}
                       />
-                      {/* Main cover — zoom on hover */}
                       <img
                         src={book.cover}
                         alt={book.title}
@@ -99,7 +98,6 @@ export default function ReadingClient({ books }: Props) {
                   )}
                 </div>
 
-                {/* Footer strip */}
                 <div className="flex items-center justify-between gap-2 px-3 py-2 bg-card border-t border-white/5">
                   <span className="inline-flex items-center gap-1 text-xs font-bold text-amber-400">
                     <span className="text-amber-400/70 font-normal">★</span>
